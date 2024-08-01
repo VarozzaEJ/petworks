@@ -11,7 +11,7 @@ class PostsService {
     const posts = await dbContext.Posts.find().populate('creator')
     return posts
   }
-  async getPostByProfileId(postProfileId) {
+  async getProfilePosts(postProfileId) {
     const profile = await dbContext.Posts.find({ creatorId: postProfileId })
     return profile
   }
