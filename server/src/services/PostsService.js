@@ -12,7 +12,7 @@ class PostsService {
     return posts
   }
   async getPostByProfileId(postProfileId) {
-    const profile = await dbContext.Posts.find(postProfileId)
+    const profile = await dbContext.Posts.find({ creatorId: postProfileId })
     return profile
   }
 
