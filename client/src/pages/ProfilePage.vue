@@ -14,7 +14,8 @@ const activeProfilePosts = computed(() => AppState.activeProfilePosts)
 const activeProfile = computed(() => AppState.activeProfile)
 
 onMounted(() => {
-    getActiveProfilePosts()
+    // getActiveProfilePosts()
+    getActiveProfile()
 })
 
 
@@ -42,14 +43,15 @@ async function getActiveProfile() {
 
 <template>
 
-    <div class="container">
-        <div class="row">
+    <div v-if="activeProfile" class="container">
+        {{ activeProfile }}
+        <!-- <div class="row">
             <div class="col-3">
-                <img :src="" alt="">
+                <img :src="activeProfile.picture" alt="">
             </div>
             <div class="col-9">
                 <div>
-                    <p>{{ profile.name }}</p>
+                    <p>{{ activeProfile.name }}</p>
                 </div>
             </div>
         </div>
@@ -57,7 +59,7 @@ async function getActiveProfile() {
             <div v-for="post in activeProfilePosts" :key="post.id" class="col-12">
                 <PostCard :postProp="post" />
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 

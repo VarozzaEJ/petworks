@@ -9,7 +9,7 @@ class PostsService {
     async getActiveProfile(profileId) {
         AppState.activeProfile = null
         const response = await api.get(`api/profiles/${profileId}`)
-        const activeProfile = await new Profile(response.data)
+        const activeProfile = new Profile(response.data)
         AppState.activeProfile = activeProfile
     }
     async getAllPosts() {
