@@ -9,3 +9,31 @@ export const PostSchema = new Schema(
   }, { timestamps: true, toJSON: { virtuals: true } })
 
 
+PostSchema.virtual('creator', {
+  localField: 'creatorId',
+  ref: 'Account',
+  foreignField: '_id',
+  justOne: true,
+})
+
+// PostSchema.virtual('commentCount', {
+//   localField: '_id',
+//   ref: 'Comment',
+//   foreignField: 'postId',
+//   count: true,
+// })
+
+PostSchema.virtual('pet',
+  {
+    localField: 'petTags',
+    ref: 'Pet',
+    foreignField: '_id',
+  })
+
+// PostSchema.virtual('likeCount',
+//   {
+//     localField: '_id',
+//     ref: 'Like',
+//     foreignField: 'postId',
+//   }
+// )
