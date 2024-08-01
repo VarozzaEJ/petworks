@@ -5,23 +5,34 @@ import { logger } from "../utils/Logger.js";
 
 
 export class PostsController extends BaseController {
-  constructor() {
-    super('api/posts')
-    this.router
-      .use(Auth0Provider.getAuthorizedUserInfo)
-      .post('', this.createPost)
-  }
+    constructor() {
+        super('api/posts')
+        this.router
+            .get('', this.getAllPosts)
+            .use(Auth0Provider.getAuthorizedUserInfo)
+            .post('', this.createPost)
+    }
 
-  async createPost(request, response, next) {
-    try {
-      const user = request.userInfo
-      const postData = request.body
-      postData.creatorId = user.id
-      const newPost = await postsService.createPost(postData)
-      response.send(newPost)
+    async createPost(request, response, next) {
+        try {
+            const user = request.userInfo
+            const postData = request.body
+            postData.creatorId = user.id
+            const newPost = await postsService.createPost(postData)
+            response.send(newPost)
+        }
+        catch (error) {
+            next(error);
+            logger.log('Could not create post', error)
+        }
     }
-    catch (error) {
-      next(error);
+
+    async getAllPosts(request, response, next) {
+        try {
+            const posts = await postsService.getAllPosts()
+            response.send(posts)
+        } catch (error) {
+            next(error)
+        }
     }
-  }
 }
