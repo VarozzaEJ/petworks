@@ -1,17 +1,38 @@
 <script setup>
+import { computed, onMounted } from 'vue';
+import { AppState } from '../AppState.js';
+import Pop from '../utils/Pop.js';
+import { postsService } from '../services/PostsService.js';
+import PostCard from '../components/PostCard.vue';
+
+
+
+const posts = computed(() => AppState.posts)
+
+onMounted(() => {
+  getAllPosts()
+})
+
+async function getAllPosts() {
+  try {
+    await postsService.getAllPosts()
+  }
+  catch (error) {
+    Pop.error('Could not get posts');
+  }
+}
 
 </script>
 
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <div class="home-card p-5 card align-items-center shadow rounded elevation-3">
-      <img src="https://bcw.blob.core.windows.net/public/img/8600856373152463" alt="CodeWorks Logo"
-        class="rounded-circle">
-      <h1 class="my-5 bg-dark text-white p-3 rounded text-center">
-        Petworks
-      </h1>
+  <div class="container-fluid">
+    <div class="row ">
+      <div v-for="post in posts" :key="post.id" class="col-12 bg-primary mx-0 px-0">
+        <PostCard :postProp="post" />
+      </div>
     </div>
   </div>
+
 </template>
 
 <style scoped lang="scss">
@@ -33,5 +54,9 @@
       object-position: center;
     }
   }
+}
+
+.text-shadow {
+  text-shadow: 2px 2px black;
 }
 </style>

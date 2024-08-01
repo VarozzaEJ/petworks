@@ -23,17 +23,17 @@ async function logout() {
       <div class="dropdown my-2 my-lg-0">
         <div type="button" class="bg-dark border-0 selectable no-select" data-bs-toggle="dropdown"
           aria-expanded="false">
-          <div v-if="account?.picture || identity?.picture">
+          <div class="bg-primary" v-if="account?.picture || identity?.picture">
             <img :src="account?.picture || identity?.picture" alt="account photo" height="40" class="rounded" />
           </div>
         </div>
         <div class="dropdown-menu dropdown-menu-sm-end dropdown-menu-start p-0" aria-labelledby="authDropdown">
           <div class="list-group">
-            <router-link :to="{ name: 'Account' }">
-              <div class="list-group-item dropdown-item list-group-item-action">
+            <!-- <router-link :to="{ name: 'Account' }"> -->
+            <!-- <div class="list-group-item dropdown-item list-group-item-action">
                 Manage Account
-              </div>
-            </router-link>
+              </div> -->
+            <!-- </router-link> -->
             <div class="list-group-item dropdown-item list-group-item-action text-danger selectable" @click="logout">
               <i class="mdi mdi-logout"></i>
               logout
