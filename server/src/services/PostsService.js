@@ -12,7 +12,7 @@ class PostsService {
     return posts
   }
   async getProfilePosts(postProfileId) {
-    const profile = await dbContext.Posts.find({ creatorId: postProfileId })
+    const profile = await dbContext.Posts.find({ creatorId: postProfileId }).populate('creator pets')
     return profile
   }
 

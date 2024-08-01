@@ -9,7 +9,6 @@ export class PostsController extends BaseController {
     super('api/posts')
     this.router
       .get('', this.getAllPosts)
-      // .get('/:profileId', this.getPostByProfileId)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createPost)
 

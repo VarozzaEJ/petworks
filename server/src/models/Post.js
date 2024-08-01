@@ -23,7 +23,7 @@ PostSchema.virtual('creator', {
 //   count: true,
 // })
 
-PostSchema.virtual('pet',
+PostSchema.virtual('pets',
   {
     localField: 'petTags',
     ref: 'Pet',
