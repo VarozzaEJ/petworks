@@ -22,7 +22,7 @@ export class ProfilesController extends BaseController {
 
   async getProfile(req, res, next) {
     try {
-      const profile = await profileService.getProfileById(req.params.id)
+      const profile = await profileService.getProfileById(req.params.profileId)
       res.send(profile)
     } catch (error) {
       next(error)
