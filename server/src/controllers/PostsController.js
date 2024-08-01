@@ -9,7 +9,7 @@ export class PostsController extends BaseController {
     super('api/posts')
     this.router
       .get('', this.getAllPosts)
-      .get('/:profileId', this.getPostByProfileId)
+      // .get('/:profileId', this.getPostByProfileId)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createPost)
 
@@ -37,16 +37,16 @@ export class PostsController extends BaseController {
       next(error)
     }
   }
-  async getPostByProfileId(request, response, next) {
-    try {
-      const postProfileId = request.params.profileId
-      const posts = await postsService.getPostByProfileId(postProfileId)
-      response.send(posts)
-    } catch (error) {
-      next(error)
-    }
+  // async getPostByProfileId(request, response, next) {
+  //   try {
+  //     const postProfileId = request.params.profileId
+  //     const posts = await postsService.getPostByProfileId(postProfileId)
+  //     response.send(posts)
+  //   } catch (error) {
+  //     next(error)
+  //   }
 
-  }
+  // }
 
 
 }
