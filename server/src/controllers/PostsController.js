@@ -1,6 +1,7 @@
 import { Auth0Provider } from "@bcwdev/auth0provider";
 import BaseController from "../utils/BaseController.js";
 import { postsService } from "../services/PostsService.js";
+import { logger } from "../utils/Logger.js";
 
 
 export class PostsController extends BaseController {
@@ -21,6 +22,7 @@ export class PostsController extends BaseController {
         }
         catch (error) {
             next(error);
+            logger.log('Could not create post', error)
         }
     }
 }
