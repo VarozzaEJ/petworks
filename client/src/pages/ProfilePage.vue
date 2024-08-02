@@ -53,6 +53,8 @@ async function getActiveProfilePets() {
         logger.error(error)
     }
 }
+
+
 </script>
 
 
@@ -73,12 +75,24 @@ async function getActiveProfilePets() {
             </div>
         </div>
         <div class="row">
-            <div v-for="pet in activeProfilePets" :key="pet.id" class="col-12 mx-0 px-0">
+            <div class="col-12 mx-0 px-0">
+                <p class="text-center fs-4">
+                    Pets <i role="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                        aria-expanded="false" aria-controls="collapseExample" class="mdi mdi-menu-down-outline"></i>
+                </p>
+            </div>
+            <div v-for="pet in activeProfilePets" :key="pet.id" id="collapseExample" class="collapse col-12 mx-0 px-0">
                 <PetCard :petProp="pet" />
             </div>
         </div>
         <div class="row">
-            <div v-for="post in activeProfilePosts" :key="post.id" class="col-12 mx-0 px-0">
+            <div class="col-12 mx-0 px-0">
+                <p class="text-center fs-4">
+                    Posts <i role="button" data-bs-toggle="collapse" data-bs-target="#collapsePosts"
+                        aria-expanded="false" aria-controls="collapsePosts" class="mdi mdi-menu-down-outline"></i>
+                </p>
+            </div>
+            <div v-for="post in activeProfilePosts" :key="post.id" id="collapsePosts" class="col-12 mx-0 px-0">
                 <PostCard :postProp="post" />
             </div>
         </div>
@@ -92,5 +106,9 @@ async function getActiveProfilePets() {
     width: 15dvh;
     aspect-ratio: 1/1;
     border-radius: 30%;
+}
+
+.hidden {
+    display: none !important;
 }
 </style>

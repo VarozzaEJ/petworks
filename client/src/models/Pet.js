@@ -15,4 +15,8 @@ export class Pet {
         this.createdAt = new Date(data.createdAt)
         this.updatedAt = new Date(data.updatedAt)
     }
+
+    get petBackgroundImage() {
+        return `url(${this.imgUrl})`
+    }
 }
