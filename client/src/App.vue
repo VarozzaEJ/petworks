@@ -3,6 +3,7 @@ import { computed } from 'vue';
 import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
 import ModalWrapper from "./components/ModalWrapper.vue";
+import PostForm from "./components/PostForm.vue";
 
 
 const account = computed(() => AppState.account)
@@ -19,33 +20,34 @@ const account = computed(() => AppState.account)
   <footer class="bg-danger sticky-bottom text-warning">
     <div class="container-fluid">
       <div class="row justify-content-around">
-        <div class="col-1 text-center">
+        <div class="col-2 text-center selectable navbar-button" role="button">
           <router-link :to="{ name: 'Home' }">
-
-            <i class=" mdi mdi-home text-warning"></i>
+            <i class=" mdi icon-select mdi-home text-warning"></i>
           </router-link>
         </div>
-        <div class="col-1 text-center">
-          <i class=" mdi mdi-magnify"></i>
+        <div class="col-2 text-center selectable navbar-button" role="button">
+          <i class=" mdi icon-select mdi-magnify"></i>
         </div>
-        <div class="col-1 text-center">
-          <i class=" mdi mdi-plus-circle-outline selectable" role="button" data-bs-toggle="modal"
-            data-bs-target="#modalWrapper"></i>
+        <div class="col-2 text-center selectable navbar-button" role="button" data-bs-toggle="modal"
+          data-bs-target="#newPostForm">
+          <i class=" mdi icon-select mdi-plus-circle-outline"></i>
         </div>
-        <div class="col-1 text-center">
-          <i class=" mdi mdi-heart-outline"></i>
+        <div class="col-2 text-center selectable navbar-button" role="button">
+          <i class=" mdi icon-select mdi-heart-outline"></i>
         </div>
-        <div v-if="account" class="col-1 text-center d-flex align-items-center">
+        <div v-if="account" class="col-2 text-center d-flex justify-content-center align-items-center">
           <router-link :to="{ name: 'Account' }">
-            <div>
-              <img class="account-img " :src="account.picture" alt="">
+            <div class="d-flex align-items-center">
+              <img class="account-img" :src="account.picture" :alt="account.name">
             </div>
           </router-link>
         </div>
       </div>
     </div>
   </footer>
-  <ModalWrapper />
+  <ModalWrapper modalId="newPostForm">
+    <PostForm />
+  </ModalWrapper>
 </template>
 
 <style lang="scss">
@@ -63,9 +65,25 @@ footer {
 }
 
 .account-img {
-  width: 50px;
-  height: 50px;
+  height: 45px;
   aspect-ratio: 1/1;
   border-radius: 50%;
 }
-</style>
+
+.navbar-button:active {
+  filter: opacity(50%);
+  background-color: #da2b429d;
+}
+
+// .navbar-button:hover {
+//   animation: icon-select 2s infinite linear;
+// }
+
+// @keyframes icon-select {
+//   from {
+//     transform: rotate(0deg);
+//   }
+//   to {
+//     transform: rotate(360deg);
+//   }
+// }</style>

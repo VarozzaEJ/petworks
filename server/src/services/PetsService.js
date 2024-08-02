@@ -1,5 +1,5 @@
 import { dbContext } from "../db/DbContext.js";
-import { Forbidden } from "../utils/Errors.js";
+import { Forbidden, NotFound } from "../utils/Errors.js";
 
 class PetsService {
 
@@ -11,7 +11,7 @@ class PetsService {
 
   async getPetsByOwnerId(ownerId) {
     const pets = await dbContext.Pets.find({ ownerId: ownerId })
-    if (ownerId == null) throw new Forbidden(`The owner with this id ${ownerId} has no pets`)
+    if (ownerId == null) throw new NotFound(`The owner with this id ${ownerId} has no pets`)
     return pets
   }
 }
