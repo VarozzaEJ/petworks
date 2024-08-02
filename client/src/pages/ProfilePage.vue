@@ -47,7 +47,7 @@ async function getActiveProfile() {
 <template>
 
     <div v-if="activeProfile" class="container">
-        <div class="row justify-content-between">
+        <div class="row my-4 justify-content-between">
             <div class="col-3">
                 <img class="profilePageImg" :src="activeProfile.picture" alt="">
             </div>
@@ -61,7 +61,7 @@ async function getActiveProfile() {
             </div>
         </div>
         <div class="row">
-            <div v-for="post in activeProfilePosts" :key="post.id" class="col-12">
+            <div v-for="post in activeProfilePosts" :key="post.id" class="col-12 mx-0 px-0">
                 <PostCard :postProp="post" />
             </div>
         </div>
