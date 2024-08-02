@@ -16,12 +16,11 @@ PostSchema.virtual('creator', {
   justOne: true,
 })
 
-// PostSchema.virtual('commentCount', {
-//   localField: '_id',
-//   ref: 'Comment',
-//   foreignField: 'postId',
-//   count: true,
-// })
+PostSchema.virtual('comments', {
+  localField: '_id',
+  ref: 'Comment',
+  foreignField: 'postId',
+})
 
 PostSchema.virtual('pets',
   {
