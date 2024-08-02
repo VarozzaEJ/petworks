@@ -8,7 +8,7 @@ defineProps({
 
 <template>
   <div class="modal fade" :id="modalId" tabindex="-1" :aria-labelledby="`${modalId}Label`" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-fullscreen">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" :id="`${modalId}Label`">{{ modalName }}</h1>
