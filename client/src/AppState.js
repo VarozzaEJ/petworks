@@ -21,4 +21,7 @@ export const AppState = reactive({
 
   /** @type {import('./models/Pet.js').Pet[]} user info from the database*/
   activeProfilePets: [],
+
+  /** @type {import('./models/Comment.js').Comment[]} user info from the database*/
+  activePostComments: [],
 })
