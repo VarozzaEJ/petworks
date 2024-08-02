@@ -6,17 +6,20 @@ import Pop from '../utils/Pop.js';
 import { logger } from '../utils/Logger.js';
 import { postsService } from '../services/PostsService.js';
 import PostCard from '../components/PostCard.vue';
+import PetCard from '../components/PetCard.vue';
+import { petsService } from '../services/PetsService.js';
 
 const route = useRoute()
 
 
-
+const activeProfilePets = computed(() => AppState.activeProfilePets)
 const activeProfilePosts = computed(() => AppState.activeProfilePosts)
 const activeProfile = computed(() => AppState.activeProfile)
 
 onMounted(() => {
     getActiveProfile()
     getActiveProfilePosts()
+    getActiveProfilePets()
 })
 
 
@@ -41,6 +44,15 @@ async function getActiveProfile() {
     }
 }
 
+async function getActiveProfilePets() {
+    try {
+        await petsService.getActiveProfilePets(route.params.profileId)
+    }
+    catch (error) {
+        Pop.error("Could not get this profile's pets");
+        logger.error(error)
+    }
+}
 </script>
 
 
@@ -58,6 +70,11 @@ async function getActiveProfile() {
                 <div>
                     <p>{{ activeProfile.tagline }}</p>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div v-for="pet in activeProfilePets" :key="pet.id" class="col-12 mx-0 px-0">
+                <PetCard :petProp="pet" />
             </div>
         </div>
         <div class="row">

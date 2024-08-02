@@ -2,6 +2,7 @@
 
 export class Pet {
     constructor(data) {
+        this.id = data.id || data._id
         this.name = data.name
         this.ownerId = data.ownerId
         this.bio = data.bio
