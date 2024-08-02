@@ -1,3 +1,4 @@
+import { petsService } from "../services/PetsService.js"
 import { postsService } from "../services/PostsService.js"
 import { profileService } from '../services/ProfileService.js'
 import BaseController from '../utils/BaseController'
@@ -9,6 +10,7 @@ export class ProfilesController extends BaseController {
       .get('', this.getProfiles)
       .get('/:profileId', this.getProfile)
       .get('/:profileId/posts', this.getProfilePosts)
+      .get('/:ownerId/pets', this.getPetsByOwnerId)
   }
 
   async getProfiles(req, res, next) {
@@ -34,6 +36,17 @@ export class ProfilesController extends BaseController {
       const profileId = request.params.profileId
       const profilePosts = await postsService.getProfilePosts(profileId)
       response.send(profilePosts)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async getPetsByOwnerId(request, response, next) {
+    try {
+      const ownerId = request.params.ownerId
+      const pets = await petsService.getPetsByOwnerId(ownerId)
+
+      response.send(pets)
     } catch (error) {
       next(error)
     }

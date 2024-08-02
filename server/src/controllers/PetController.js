@@ -7,7 +7,6 @@ export class PetController extends BaseController {
   constructor() {
     super('api/pets')
     this.router
-      .get('/:ownerId', this.getPetsByOwnerId)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createPet)
   }
@@ -26,14 +25,5 @@ export class PetController extends BaseController {
     }
   }
 
-  async getPetsByOwnerId(request, response, next) {
-    try {
-      const ownerId = request.params.ownerId
-      const pets = await petsService.getPetsByOwnerId(ownerId)
 
-      response.send(pets)
-    } catch (error) {
-      next(error)
-    }
-  }
 }
