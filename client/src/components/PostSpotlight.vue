@@ -6,16 +6,22 @@ import { AppState } from '../AppState.js';
 import { postsService } from '../services/PostsService.js';
 import Pop from '../utils/Pop.js';
 import { commentsService } from '../services/CommentsService.js';
+import { logger } from '../utils/Logger.js';
+import { useRoute, useRouter } from 'vue-router';
 
 // defineProps({ postProp: { type: Post, required: true } })
 const post = computed(() => AppState.activePost)
 const comments = computed(() => AppState.activePostComments)
+const route = useRoute()
+const router = useRouter()
 
 watch(() => AppState.activePost, () => {
     try {
         commentsService.getCommentsByPostId(post.value.id)
+        // route.query = post.value.id
     } catch (error) {
         Pop.error('Could not get post comments')
+        logger.error(error)
     }
 })
 
@@ -31,8 +37,8 @@ watch(() => AppState.activePost, () => {
                     <h1 class="modal-title fs-5" id=""></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div> -->
-                <div v-if="post" class="modal-body p-0">
-                    <div class="justify-content-center d-flex mb-3 mt-1">
+                <div v-if="post" class="bg-primary modal-body p-0">
+                    <div class="justify-content-center d-flex mb-3">
                         <div class="card bg-primary" style="width: 100dvh;">
                             <div class="card-title bg-primary">
                                 <div class="">
@@ -60,9 +66,9 @@ watch(() => AppState.activePost, () => {
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div class="bg-primary modal-footer">
                     <div class="row">
-                        <div v-for="comment in comments" :key="comment.id" class="col-12">
+                        <div v-for="comment in post.comments" :key="comment.id" class="col-12">
                             <div class="row">
                                 <div class="col-12">
                                     {{ comment.body }}
@@ -71,10 +77,28 @@ watch(() => AppState.activePost, () => {
                         </div>
                     </div>
                 </div>
+                <footer class="bg-primary">
+                    <button class="fab btn shadow btn-secondary justify-content-end" title="New Comment">
+                        <i class="mdi mdi-pen fs-1"></i>
+                    </button>
+                </footer>
             </div>
         </div>
     </div>
 </template>
 
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.fab {
+    border-radius: 50%;
+    position: fixed;
+    bottom: 1em;
+    right: 1em;
+    padding: 1.5em;
+    border: none;
+    box-shadow: var(--shadow);
+    z-index: 999;
+    outline: none;
+    // text-shadow: 1px 1px black;
+}
+</style>

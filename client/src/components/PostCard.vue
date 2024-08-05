@@ -1,16 +1,18 @@
 <script setup>
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRoute, useRouter } from 'vue-router';
 import { Post } from '../models/Post.js';
 import PostSpotlight from './PostSpotlight.vue';
 import { postsService } from '../services/PostsService.js';
 
 
 const props = defineProps({ postProp: { type: Post, required: true } })
-
+const route = useRoute()
+const router = useRouter()
 
 
 function setActiveProject() {
   postsService.setActiveProject(props.postProp)
+  // router.push({ query: { postId: `${props.postProp.id}` } })
 }
 </script>
 
