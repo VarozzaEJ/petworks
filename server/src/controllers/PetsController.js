@@ -15,7 +15,7 @@ export class PetController extends BaseController {
     try {
       const user = request.userInfo
       const petData = request.body
-      petData.creatorId = user.id
+      petData.ownerId = user.id
       const newPet = await petsService.createPet(petData)
       response.send(newPet)
     }

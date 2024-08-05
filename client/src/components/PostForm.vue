@@ -40,11 +40,13 @@ const editablePostData = ref({
     </div>
     <div class="col-12">
       <div v-if="account?.pets">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-          <label class="form-check-label" for="flexCheckDefault">
-            Default checkbox
-          </label>
+        <div v-for="pet in account.pets" :key="pet.id">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Default checkbox
+            </label>
+          </div>
         </div>
       </div>
       <div v-else>

@@ -5,7 +5,7 @@ class PetsService {
 
   async createPet(petData) {
     const pet = await dbContext.Pets.create(petData)
-    await pet.populate('creator')
+    await pet.populate('owner')
     return pet
   }
 
