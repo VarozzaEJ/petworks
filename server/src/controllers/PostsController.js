@@ -50,7 +50,6 @@ export class PostsController extends BaseController {
   // }
   async getCommentsByPostId(request, response, next) {
     try {
-      debugger
       const postId = request.query.postId
       const comments = await commentsService.getCommentsByPostId(postId)
       response.send(comments)

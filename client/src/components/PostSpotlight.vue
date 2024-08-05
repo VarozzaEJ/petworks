@@ -1,5 +1,5 @@
 <script setup>
-import { computed, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import PostCard from './PostCard.vue';
 import { Post } from '../models/Post.js';
 import { AppState } from '../AppState.js';
@@ -17,13 +17,39 @@ const router = useRouter()
 
 watch(() => AppState.activePost, () => {
     try {
-        commentsService.getCommentsByPostId(post.value.id)
+        const postId = route.query.postId
+        commentsService.getCommentsByPostId(postId)
+        // logger.log('ROUTE.QUERY.POSTID', postId)
         // route.query = post.value.id
     } catch (error) {
         Pop.error('Could not get post comments')
         logger.error(error)
     }
 })
+
+const commentData = ref({
+    body: '',
+    postId: route.query.postId
+})
+
+async function createComment() {
+    try {
+        await commentsService.createComment(commentData.value)
+        Pop.success(`Successfully created comment`)
+        resetForm()
+        //TODO reset form on submit once comments are finished
+    }
+    catch (error) {
+        Pop.error('Could not create comment', 'error');
+    }
+}
+
+function resetForm() {
+    commentData.value = {
+        body: '',
+        postId: route.query.postId
+    }
+}
 
 </script>
 
@@ -37,9 +63,9 @@ watch(() => AppState.activePost, () => {
                     <h1 class="modal-title fs-5" id=""></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div> -->
-                <div v-if="post" class="bg-primary modal-body p-0">
+                <div v-if="post" class="bg-primary flex-column d-flex modal-body p-0">
                     <div class="justify-content-center d-flex mb-3">
-                        <div class="card bg-primary" style="width: 100dvh;">
+                        <div class="card border-none bg-primary" style="width: 100dvh;">
                             <div class="card-title bg-primary">
                                 <div class="">
                                     <div class="d-flex align-items-center">
@@ -63,24 +89,40 @@ watch(() => AppState.activePost, () => {
                                     <p class="mb-0 fs-5"><i class="mdi mdi-heart-outline"></i>15</p>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-primary modal-footer">
-                    <div class="row">
-                        <div v-for="comment in comments" :key="comment.id" class="col-12">
-                            <div class="row">
-                                <div class="col-12">
-                                    {{ comment.body }}
+                            <form @submit.prevent="createComment()">
+                                <div class="mb-3">
+                                    <label for="comment" class="form-label"></label>
+                                    <textarea v-model="commentData.body" placeholder="Tell the people..."
+                                        class="form-control" id="comment" rows="3" name="comment"></textarea>
+                                </div>
+                                <div class="d-flex mb-2 justify-content-end">
+                                    <button role="button" title="create comment" type="submit"
+                                        class="btn btn-secondary text-end">Submit</button>
+                                </div>
+                            </form>
+                            <div v-for="comment in comments" :key="comment.id" class="">
+                                <div class=" bg-light mb-3 mx-3">
+                                    <span class="d-flex align-items-center "><img class="creator-img"
+                                            :src="comment.creator.picture" :alt="`${comment.creator.name}'s picture'`">
+                                        <p class="fs-2 mb-0 ms-2">{{ comment.creator.name }}</p>
+                                    </span>
+                                    <p class="fs-5 fw-bold text-dark">{{ comment.body }}</p>
                                 </div>
                             </div>
                         </div>
+
+
+
+
                     </div>
                 </div>
+                <div class="bg-primary modal-footer">
+
+                </div>
                 <footer class="bg-primary">
-                    <button class="fab btn shadow btn-secondary justify-content-end" title="New Comment">
+                    <!-- <button class="fab btn shadow btn-secondary justify-content-end" title="New Comment">
                         <i class="mdi mdi-pen fs-1"></i>
-                    </button>
+                    </button> -->
                 </footer>
             </div>
         </div>
@@ -94,11 +136,25 @@ watch(() => AppState.activePost, () => {
     position: fixed;
     bottom: 1em;
     right: 1em;
-    padding: 1.5em;
+    padding: .75em;
     border: none;
     box-shadow: var(--shadow);
     z-index: 999;
     outline: none;
     // text-shadow: 1px 1px black;
+}
+
+.border-none {
+    border: none;
+    border-radius: 0;
+}
+
+.creator-img {
+    aspect-ratio: 1/1;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
 }
 </style>
