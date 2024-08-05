@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import { Pet } from "../models/Pet";
 import { Account } from "../models/Account";
+import PetCard from "./PetCard.vue";
 defineProps({
   account: Account
 })
@@ -34,17 +35,18 @@ const editablePostData = ref({
         <input v-model="editablePostData.imgUrl" type="email" class="form-control" id="imgUrl" maxlength="1000">
       </div>
     </div>
-    <div class="col-12">
+    <div class="col-12 mb-3">
       <label for="body">Make a Post!</label>
       <textarea v-model="editablePostData.body" class="form-control" id="body" maxlength="300"></textarea>
     </div>
-    <div class="col-12">
+    <div class="col-4">
       <div v-if="account?.pets">
         <div v-for="pet in account.pets" :key="pet.id">
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Default checkbox
+            <PetCard :petProp="new Pet(pet)" />
+            <input class="form-check-input" type="checkbox" :value="pet.id" id="petTag">
+            <label class="form-check-label" for="petTag">
+              {{ pet.name }}
             </label>
           </div>
         </div>

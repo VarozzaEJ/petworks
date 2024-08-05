@@ -1,3 +1,4 @@
+import { Pet } from "./Pet"
 
 
 export class Account {
