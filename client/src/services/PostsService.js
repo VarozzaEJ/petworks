@@ -11,6 +11,7 @@ class PostsService {
     }
     async getAllPosts() {
         // AppState.posts = null
+
         const response = await api.get('api/posts')
         logger.log(response.data)
         const posts = await response.data.map(postPOJO => new Post(postPOJO))

@@ -68,7 +68,7 @@ watch(() => AppState.activePost, () => {
                 </div>
                 <div class="bg-primary modal-footer">
                     <div class="row">
-                        <div v-for="comment in post?.comments" :key="comment.id" class="col-12">
+                        <div v-for="comment in comments" :key="comment.id" class="col-12">
                             <div class="row">
                                 <div class="col-12">
                                     {{ comment.body }}

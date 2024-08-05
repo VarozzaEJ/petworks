@@ -3,6 +3,7 @@ import { RouterLink, useRoute, useRouter } from 'vue-router';
 import { Post } from '../models/Post.js';
 import PostSpotlight from './PostSpotlight.vue';
 import { postsService } from '../services/PostsService.js';
+import { logger } from '../utils/Logger.js';
 
 
 const props = defineProps({ postProp: { type: Post, required: true } })
@@ -10,9 +11,10 @@ const route = useRoute()
 const router = useRouter()
 
 
-function setActiveProject() {
+async function setActiveProject() {
   postsService.setActiveProject(props.postProp)
-  // router.push({ query: { postId: `${props.postProp.id}` } })
+  await router.push({ query: { postId: `${props.postProp.id}` } })
+  logger.log(router.currentRoute)
 }
 </script>
 
