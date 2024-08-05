@@ -46,7 +46,7 @@ const account = computed(() => AppState.account)
     </div>
   </footer>
   <ModalWrapper modalId="newPostForm">
-    <PostForm />
+    <PostForm :account="account" />
   </ModalWrapper>
   <PostSpotlight />
 </template>

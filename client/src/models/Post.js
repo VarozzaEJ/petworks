@@ -12,5 +12,6 @@ export class Post {
         this.createdAt = data.createdAt
         this.updatedAt = data.updatedAt
         this.pet = data.pet
+        this.comments = data.comments.map((comment) => new Comment(comment))
     }
 }

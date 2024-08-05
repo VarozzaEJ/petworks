@@ -12,3 +12,9 @@ export const AccountSchema = new Schema(
   { timestamps: true, toJSON: { virtuals: true } }
 )
 
+AccountSchema.virtual('pets', {
+  localField: '_id',
+  ref: 'Pet',
+  foreignField: 'ownerId'
+})
+
