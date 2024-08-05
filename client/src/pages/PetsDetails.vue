@@ -1,19 +1,33 @@
 <script setup>
-import { computed } from 'vue';
-import PostCard from '../components/PostCard.vue';
+import { computed, onMounted } from 'vue';
 import { AppState } from '../AppState.js';
+import { petsService } from '../services/PetsService.js';
+import { useRoute } from 'vue-router';
+import Pop from '../utils/Pop.js';
+import { logger } from '../utils/Logger.js';
 
-const posts = computed(() => AppState.posts)
+const activeProfilePosts = computed(() => AppState.activeProfilePosts)
+const route = useRoute()
+onMounted(() => {
 
+  getActivePetsDetails()
+})
+
+function getActivePetsDetails() {
+  try {
+    petsService.getActivePetsDetails(route.params.petsId)
+  } catch (error) {
+    Pop.error('Could not get pets details');
+    logger.error(error)
+  }
+}
 </script>
 
 
 <template>
 
   <div class="col-12">
-    <img class="img-fluid pet-img"
-      src="https://images.unsplash.com/photo-1510771463146-e89e6e86560e?q=80&w=1362&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-      alt="">
+    <img class="img-fluid pet-img" src="" alt="">
   </div>
   <div class="card-body pt-4 bg-primary d-flex flex-column align-items-center ">
     <p class="fs-1 fw-bold">Maxwell</p>
@@ -41,9 +55,8 @@ const posts = computed(() => AppState.posts)
     <div class="col">
       <div class="collapse multi-collapse" id="multiCollapseExample2">
         <div class="card card-body">
-          <div v-for="post in posts" :key="post.id" class="col-12 mx-0 px-0">
+          <div v-for="post in activeProfilePosts" :key="post.id" class="col-12 mx-0 px-0">
             <PostCard :postProp="post" />
-
           </div>
         </div>
       </div>
