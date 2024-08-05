@@ -6,6 +6,9 @@ import { api } from "./AxiosService.js"
 
 
 class PostsService {
+    setActiveProject(postProp) {
+        AppState.activePost = postProp
+    }
     async getAllPosts() {
         const response = await api.get('api/posts')
         logger.log(response.data)
@@ -24,6 +27,9 @@ class PostsService {
         const activeProfilePosts = response.data.map(postPOJO => new Post(postPOJO))
         AppState.activeProfilePosts = activeProfilePosts
     }
+
 }
+
+
 
 export const postsService = new PostsService()

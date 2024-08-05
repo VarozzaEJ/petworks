@@ -8,6 +8,7 @@ import { postsService } from '../services/PostsService.js';
 import PostCard from '../components/PostCard.vue';
 import PetCard from '../components/PetCard.vue';
 import { petsService } from '../services/PetsService.js';
+import { Modal } from 'bootstrap';
 
 const route = useRoute()
 
@@ -26,6 +27,8 @@ onMounted(() => {
 async function getActiveProfilePosts() {
     try {
         await postsService.getActiveProfilePosts(route.params.profileId)
+
+
     }
     catch (error) {
         Pop.error('Could not get specific posts');
@@ -35,7 +38,6 @@ async function getActiveProfilePosts() {
 
 async function getActiveProfile() {
     try {
-
         await postsService.getActiveProfile(route.params.profileId)
     }
     catch (error) {

@@ -33,13 +33,5 @@ export class CommentsController extends BaseController {
         }
     }
 
-    async getCommentsByPostId(request, response, next) {
-        try {
-            const postId = request.params.postId
-            const comments = await commentsService.getCommentsByPostId(postId)
-            response.send(comments)
-        } catch (error) {
-            next(error)
-        }
-    }
+
 }

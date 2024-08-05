@@ -16,6 +16,7 @@ class CommentsService {
         const comments = await dbContext.Comments.find().populate('creator likeCount')
         return comments
     }
+
 }
 
 export const commentsService = new CommentsService()

@@ -48,6 +48,7 @@ const account = computed(() => AppState.account)
   <ModalWrapper modalId="newPostForm">
     <PostForm />
   </ModalWrapper>
+  <PostSpotlight />
 </template>
 
 <style lang="scss">
