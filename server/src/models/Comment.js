@@ -12,7 +12,8 @@ export const CommentSchema = new Schema({
 CommentSchema.virtual('creator', {
     localField: 'creatorId',
     ref: 'Account',
-    foreignField: '_id'
+    foreignField: '_id',
+    justOne: true,
 })
 
 CommentSchema.virtual('likeCount', {
@@ -25,5 +26,5 @@ CommentSchema.virtual('likeCount', {
 // CommentSchema.virtual('postId', {
 //     localField: 'postId',
 //     ref: 'Post',
-//     foreignField: ''
+//     foreignField: 'Post'
 // })
