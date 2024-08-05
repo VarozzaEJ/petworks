@@ -8,7 +8,7 @@ class CommentsService {
         return comment
     }
     async getCommentsByPostId(postId) {
-        const postComments = await dbContext.Comments.find({ postId: postId }).populate('creator likeCount')
+        const postComments = await dbContext.Comments.find({ postId }).populate('creator likeCount')
         return postComments
     }
 
