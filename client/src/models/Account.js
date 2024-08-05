@@ -1,4 +1,4 @@
-import { Pet } from "./Pet"
+
 
 export class Account {
   constructor(data) {
@@ -7,6 +7,6 @@ export class Account {
     this.name = data.name
     this.picture = data.picture
     // TODO add additional properties if needed
-    this.pets = data.pets.map((pet) => new Pet(pet))
+    this.pets = data.pets
   }
 }
