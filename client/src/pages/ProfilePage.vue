@@ -142,16 +142,16 @@ async function addPet() {
                 <input v-model="petData.name" required type="text" class="form-control" id="inputPetName"
                   aria-describedby="petName" minlength="3" maxlength="50" placeholder="Sam">
               </div>
-              <!-- <div class="mb-3">
+              <div class="mb-3">
                 <label for="petDescription" class="form-label">Pet Description</label>
                 <input v-model="petData.description" type="text" class="form-control" id="petDescription"
                   aria-describedby="petDescription" minlength=" 3" maxlength="50" placeholder="Sam is my BFF" required>
-              </div> -->
-              <!-- <div class="mb-3">
+              </div>
+              <div class="mb-3">
                 <label for="pet-img">Image URL</label>
                 <input v-model="petData.coverImg" class="form-control" type="url" id="event-img" name="pet-img"
                   maxlength="3000" placeholder="Pic of Same" required>
-              </div> -->
+              </div>
 
               <div class="input-group mb-3">
                 <label class="input-group-text" for="inputGroupFile01">Pet Picture</label>
@@ -174,17 +174,20 @@ async function addPet() {
     </div>
 
     <div class="row">
-      <div class="col-12 mx-0 px-0">
+      <div class="col-12 mx-0 px-0 pt-3">
         <p class="text-center fs-4">
           Pets <i role="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false"
             aria-controls="collapseExample" class="mdi mdi-menu-down-outline"></i>
         </p>
       </div>
+
       <div v-for="pet in activeProfilePets" :key="pet.id" id="collapseExample" class="collapse col-12 mx-0 px-0">
         <router-link :to="{ name: 'Pets', params: { petsId: pet.id } }">
           <PetCard :petProp="pet" />
         </router-link>
+
       </div>
+      <hr>
     </div>
     <div class="row">
       <div class="col-12 mx-0 px-0">
@@ -196,6 +199,7 @@ async function addPet() {
       <div v-for="post in activeProfilePosts" :key="post.id" id="collapsePosts" class="col-12 mx-0 px-0">
         <PostCard :postProp="post" />
       </div>
+      <hr>
     </div>
   </div>
 
