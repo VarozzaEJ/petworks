@@ -19,6 +19,11 @@ class PetsService {
     AppState.activePets = activePets
   }
 
+  async getPetOfTheDay() {
+    const response = await api.get('api/pets/randompet')
+    const petOfTheDay = new Pet(response.data)
+    AppState.petOfTheDay = petOfTheDay
+  }
 }
 
 export const petsService = new PetsService()

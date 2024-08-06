@@ -1,4 +1,5 @@
 import { reactive } from 'vue'
+import PetOfTheDay from "./components/PetOfTheDay.vue"
 
 // NOTE AppState is a reactive object to contain app level data
 export const AppState = reactive({
@@ -28,5 +29,8 @@ export const AppState = reactive({
   activePostComments: [],
 
   /** @type {import('./models/Post.js').Post} user info from the database*/
-  activePost: null
+  activePost: null,
+
+  /** @type {import('./models/Pet.js').Pet} user info from the database*/
+  petOfTheDay: null
 })
