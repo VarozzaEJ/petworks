@@ -26,5 +26,6 @@ CommentSchema.virtual('likeCount', {
 // CommentSchema.virtual('postId', {
 //     localField: 'postId',
 //     ref: 'Post',
-//     foreignField: 'Post'
+//     foreignField: '_id',
+//     justOne: true,
 // })

@@ -5,6 +5,10 @@ import { api } from "./AxiosService.js"
 
 
 class CommentsService {
+    async deleteComment(commentId) {
+        const commentToDelete = await api.delete(`api/comments/${commentId}`)
+        return commentToDelete
+    }
     async createComment(commentData) {
         const response = await api.post(`api/comments`, commentData)
         const comment = await new Comment(response.data)
