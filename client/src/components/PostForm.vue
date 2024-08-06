@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from "vue";
-import { Pet } from "../models/Pet";
 import { Account } from "../models/Account";
-import PetCard from "./PetCard.vue";
+import { postsService } from "../services/PostsService";
+import Pop from "../utils/Pop";
 defineProps({
   account: Account
 })
@@ -10,13 +10,21 @@ defineProps({
 const editablePostData = ref({
   body: '',
   imgUrl: '',
-  petTags: [Pet]
 })
+
+async function createPost() {
+  try {
+    await postsService.createPost(editablePostData.value)
+  }
+  catch (error) {
+    Pop.error('Could not make Post');
+  }
+}
 </script>
 
 
 <template>
-  <form class="row justify-content-center">
+  <form @submit.prevent="createPost()" class="row justify-content-center">
     <div class="col-8 mb-3">
       <label class="form-label">Image Preview</label>
       <div class="d-flex justify-content-center">
@@ -32,32 +40,15 @@ const editablePostData = ref({
     <div class="col-12">
       <div class="mb-3">
         <label for="imgUrl" class="form-label">Image URL</label>
-        <input v-model="editablePostData.imgUrl" type="email" class="form-control" id="imgUrl" maxlength="1000">
+        <input v-model="editablePostData.imgUrl" type="text" class="form-control" id="imgUrl" maxlength="1000">
       </div>
     </div>
     <div class="col-12 mb-3">
       <label for="body">Make a Post!</label>
-      <textarea v-model="editablePostData.body" class="form-control" id="body" maxlength="300"></textarea>
+      <textarea v-model="editablePostData.body" class="form-control" id="body" maxlength="300" required></textarea>
     </div>
-    <div class="col-12">
-      <div v-if="account?.pets">
-        <div v-for="pet in account.pets" :key="pet.id" class="row">
-          <div class="col-12">
-            <div class="form-check p-0">
-              <PetCard :petProp="new Pet(pet)" />
-              <div class="d-flex justify-content-center">
-                <input class="form-check-input" type="checkbox" :value="pet.id" id="petTag">
-                <label class="form-check-label" for="petTag">
-                  {{ pet.name }}
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div v-else>
-        <p class="text-center">You need to add a pet before you can post!</p>
-      </div>
+    <div class="d-grid">
+      <button type="submit" class="btn btn-danger fw-bold">Make Post</button>
     </div>
   </form>
 

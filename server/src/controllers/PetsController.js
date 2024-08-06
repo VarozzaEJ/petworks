@@ -3,7 +3,7 @@ import { petsService } from "../services/PetsService.js";
 import BaseController from "../utils/BaseController.js";
 import { logger } from "../utils/Logger.js";
 
-export class PetController extends BaseController {
+export class PetsController extends BaseController {
   constructor() {
     super('api/pets')
     this.router

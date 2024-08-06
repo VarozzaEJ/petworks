@@ -30,6 +30,13 @@ class PostsService {
         AppState.activeProfilePosts = activeProfilePosts
     }
 
+    async createPost(postData) {
+        const response = await api.post('api/posts', postData)
+        const newPost = new Post(response.data)
+        AppState.posts.unshift(newPost)
+        return newPost
+    }
+
 }
 
 

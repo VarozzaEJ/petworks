@@ -8,7 +8,7 @@ class PostsService {
     return post
   }
   async getAllPosts() {
-    const posts = await dbContext.Posts.find().populate('creator comments')
+    const posts = await dbContext.Posts.find().sort('-createdAt').populate('creator comments')
     return posts
   }
   async getProfilePosts(postProfileId) {

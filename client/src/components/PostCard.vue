@@ -21,7 +21,7 @@ async function setActiveProject() {
 
 <template>
   <div class="justify-content-center d-flex mb-3 mt-1">
-    <div class="card bg-primary" style="width: 100dvh;">
+    <div class="card bg-primary shadow" style="width: 100dvh;">
       <div class="card-title bg-primary">
         <div class="">
           <div class="d-flex align-items-center">
@@ -39,7 +39,7 @@ async function setActiveProject() {
       </div>
       <div @click="setActiveProject()" data-bs-toggle="modal" data-bs-target="#postFocusModal">
 
-        <img :src="postProp.imgUrl" class="card-img-top" :alt="`An image of an event with the type of`">
+        <img :src="postProp.imgUrl" class="post-img img-fluid" :alt="`An image of an event with the type of`">
         <div class="card-body bg-primary d-flex align-items-center justify-content-between">
           <p class="mb-0 fs-5">12 <i class="mdi mdi-comment-outline"></i></p>
           <p class="mb-0 fs-5"><i class="mdi mdi-heart-outline"></i>15</p>
@@ -51,4 +51,11 @@ async function setActiveProject() {
 </template>
 
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.post-img {
+  width: 100%;
+  height: 50vh;
+  object-fit: cover;
+  object-position: center;
+}
+</style>
