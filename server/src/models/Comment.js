@@ -15,12 +15,13 @@ CommentSchema.virtual('creator', {
     justOne: true,
 })
 
-CommentSchema.virtual('likeCount', {
-    localField: '_id',
-    ref: 'Post',
-    count: true,
-    foreignField: 'commentId'
-})
+
+// CommentSchema.virtual('likeCount', {
+//     localField: '_id',
+//     ref: 'Post',
+//     count: true,
+//     foreignField: 'commentId'
+// })
 
 // CommentSchema.virtual('postId', {
 //     localField: 'postId',

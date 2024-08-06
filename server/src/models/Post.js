@@ -29,10 +29,18 @@ PostSchema.virtual('pets',
     foreignField: '_id',
   })
 
-// PostSchema.virtual('likeCount',
-//   {
-//     localField: '_id',
-//     ref: 'Like',
-//     foreignField: 'postId',
-//   }
-// )
+PostSchema.virtual('likeCount',
+  {
+    localField: '_id',
+    ref: 'Like',
+    foreignField: 'postId',
+    count: true,
+  }
+)
+
+PostSchema.virtual('commentCount', {
+  localField: '_id',
+  foreignField: 'postId',
+  ref: 'Comment',
+  count: true,
+})

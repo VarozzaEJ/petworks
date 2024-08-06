@@ -9,9 +9,10 @@ export class Post {
         this.imgUrl = data.imgUrl
         this.petTags = data.petTags
         this.creator = data.creator ? new Account(data.creator) : null
+        this.likeCount = data.likeCount
         this.createdAt = data.createdAt
         this.updatedAt = data.updatedAt
         this.pet = data.pet
-        this.comments = data.comments.map((comment) => new Comment(comment))
+        this.commentCount = data.commentCount
     }
 }

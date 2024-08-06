@@ -8,6 +8,6 @@ export class Comment {
         this.creator = data.creator ? new Account(data.creator) : null
         this.body = data.body
         this.postId = data.postId
-        this.likeCount = data.likeCount
+        // this.likeCount = data.likeCount
     }
 }

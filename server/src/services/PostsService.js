@@ -8,11 +8,12 @@ class PostsService {
     return post
   }
   async getAllPosts() {
-    const posts = await dbContext.Posts.find().sort('-createdAt').populate('creator comments')
+    const posts = await dbContext.Posts.find().sort('-createdAt').populate('creator likeCount commentCount')
     return posts
   }
   async getProfilePosts(postProfileId) {
-    const profile = await dbContext.Posts.find({ creatorId: postProfileId }).populate('creator pets comments')
+    const profile = await dbContext.Posts.find({ creatorId: postProfileId }).populate('creator pets likeCount')
+    //TODO turn the pets virtual into its own seperate request.
     return profile
   }
 

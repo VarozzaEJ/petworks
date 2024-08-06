@@ -11,16 +11,16 @@ class CommentsService {
     }
     async createComment(commentData) {
         const comment = await dbContext.Comments.create(commentData)
-        await comment.populate('creator likeCount')
+        await comment.populate('creator')
         return comment
     }
     async getCommentsByPostId(postId) {
-        const postComments = await dbContext.Comments.find({ postId }).populate('creator likeCount')
+        const postComments = await dbContext.Comments.find({ postId }).populate('creator')
         return postComments
     }
 
     async getAllComments() {
-        const comments = await dbContext.Comments.find().populate('creator likeCount')
+        const comments = await dbContext.Comments.find().populate('creator')
         return comments
     }
 

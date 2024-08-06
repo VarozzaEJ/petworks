@@ -32,5 +32,9 @@ export const AppState = reactive({
   activePost: null,
 
   /** @type {import('./models/Pet.js').Pet} user info from the database*/
-  petOfTheDay: null
+  petOfTheDay: null,
+
+
+  /** @type {import('./models/Like.js').PostLikerProfile[]} user info from the database*/
+  postLikeProfiles: [],
 })
