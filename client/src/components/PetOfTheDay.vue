@@ -1,26 +1,15 @@
 <script setup>
-import { petsService } from "../services/PetsService";
-import Pop from "../utils/Pop";
-import PetCard from "./PetCard.vue";
+import { Pet } from "../models/Pet";
 
-
-
-async function getPetOfTheDay() {
-  try {
-    await petsService.getPetOfTheDay()
-  }
-  catch (error) {
-    Pop.error('Could not retrieve the Pet of the Day');
-  }
-}
+defineProps({ petOfTheDayProp: Pet })
 </script>
 
 
 <template>
-  <div class="card mb-3" style="max-width: 540px;">
+  <div class="card mb-3 " style="max-width: 540px;">
     <div class="row g-0">
       <div class="col-md-4">
-        <PetCard />
+        <img :src="petOfTheDayProp.imgUrl" class="img-fluid rounded-start" :alt="petOfTheDayProp.name">
       </div>
       <div class="col-md-8">
         <div class="card-body">

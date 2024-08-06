@@ -18,7 +18,7 @@ function hide() {
 
         <div class="card bg-primary d-flex justify-content-center align-items-center pet-background-image img-fluid rounded"
             style="width: 100dvh;">
-            <p class="fs-1 text-shadow fw-bold text-light">{{ petProp.name }}</p>
+            <p class="fs-1 text-shadow fw-bold text-light">{{ petProp?.name }}</p>
         </div>
     </div>
 </template>
