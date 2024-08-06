@@ -1,5 +1,11 @@
 import { dbContext } from "../db/DbContext.js";
+import { PetSchema } from "../models/Pet.js";
 import { Forbidden, NotFound } from "../utils/Errors.js";
+
+const petOfTheDayCache = {
+  pet: null,
+  expireAt: 0
+}
 
 class PetsService {
 
@@ -15,11 +21,16 @@ class PetsService {
     return pets
   }
 
-  async getRandomPet() {
+  async getPetOfTheDay() {
+    if (petOfTheDayCache.expireAt > Date.now()) return petOfTheDayCache.pet
     const pets = await dbContext.Pets.find().populate('owner')
     const randomPetIndex = Math.floor(Math.random() * pets.length)
-    const petOfTheDay = pets[randomPetIndex]
-
+    const petOFTheDay = pets[randomPetIndex]
+    petOfTheDayCache.pet = petOFTheDay
+    const today = new Date(new Date().toDateString())
+    const tomorrow = today.getTime() + 86400000
+    petOfTheDayCache.expireAt = tomorrow
+    return petOFTheDay
   }
 }
 

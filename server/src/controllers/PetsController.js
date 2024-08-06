@@ -28,7 +28,7 @@ export class PetsController extends BaseController {
 
   async getRandomPet(request, response, next) {
     try {
-      const randomPet = await petsService.getRandomPet()
+      const randomPet = await petsService.getPetOfTheDay()
       response.send(randomPet)
     } catch (error) {
       next(error)
