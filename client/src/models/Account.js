@@ -9,5 +9,6 @@ export class Account {
     this.picture = data.picture
     // TODO add additional properties if needed
     this.pets = data.pets
+    this.tagline = data.tagline
   }
 }
