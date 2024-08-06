@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { Account } from "../models/Account";
 import { postsService } from "../services/PostsService";
 import Pop from "../utils/Pop";
+import { Modal } from "bootstrap";
 defineProps({
   account: Account
 })
@@ -15,9 +16,18 @@ const editablePostData = ref({
 async function createPost() {
   try {
     await postsService.createPost(editablePostData.value)
+    Modal.getOrCreateInstance('#newPostForm').hide()
+    resetForm()
   }
   catch (error) {
     Pop.error('Could not make Post');
+  }
+}
+
+function resetForm() {
+  editablePostData.value = {
+    body: '',
+    imgUrl: '',
   }
 }
 </script>
