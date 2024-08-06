@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import PostCard from './PostCard.vue';
 import { Post } from '../models/Post.js';
 import { AppState } from '../AppState.js';
@@ -17,7 +17,8 @@ const router = useRouter()
 
 watch(() => AppState.activePost, () => {
     try {
-        const postId = route.query.postId
+
+        const postId = AppState.activePost.id
         commentsService.getCommentsByPostId(postId)
         // logger.log('ROUTE.QUERY.POSTID', postId)
         // route.query = post.value.id
@@ -27,6 +28,7 @@ watch(() => AppState.activePost, () => {
     }
 })
 
+
 const commentData = ref({
     body: '',
     postId: route.query.postId
@@ -34,6 +36,7 @@ const commentData = ref({
 
 async function createComment() {
     try {
+        commentData.value.postId = route.query.postId
         await commentsService.createComment(commentData.value)
         Pop.success(`Successfully created comment`)
         resetForm()
@@ -48,6 +51,18 @@ function resetForm() {
     commentData.value = {
         body: '',
         postId: route.query.postId
+    }
+}
+
+async function deleteComment(commentId) {
+    try {
+        const wantsToDelete = await Pop.confirm("Are you sure?")
+        if (!wantsToDelete) return
+        await commentsService.deleteComment(commentId)
+        commentsService.getCommentsByPostId(AppState.activePost.id)
+    }
+    catch (error) {
+        Pop.error(error);
     }
 }
 
@@ -102,11 +117,19 @@ function resetForm() {
                             </form>
                             <div v-for="comment in comments" :key="comment.id" class="">
                                 <div class=" bg-light mb-3 mx-3">
-                                    <span class="d-flex align-items-center "><img class="creator-img"
-                                            :src="comment.creator.picture" :alt="`${comment.creator.name}'s picture'`">
-                                        <p class="fs-2 mb-0 ms-2">{{ comment.creator.name }}</p>
+                                    <span class="d-flex align-items-center justify-content-between">
+                                        <div class="d-flex ms-3 align-items-center">
+                                            <img class="creator-img" :src="comment.creator.picture"
+                                                :alt="`${comment.creator.name}'s picture'`">
+                                            <p class="fs-2 mb-0 ms-2">{{ comment.creator.name }}</p>
+                                        </div>
+                                        <button v-if="comment.creatorId == AppState.account.id"
+                                            class="text-end btn me-3 btn-secondary"
+                                            @click="deleteComment(comment.id)"><i
+                                                class="mdi mdi-delete-forever"></i></button>
                                     </span>
-                                    <p class="fs-5 fw-bold text-dark">{{ comment.body }}</p>
+                                    <p class="fs-5 ms-3 fw-bold text-dark">{{ comment.body }}</p>
+
                                 </div>
                             </div>
                         </div>
