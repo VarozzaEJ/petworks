@@ -1,4 +1,5 @@
 import { AppState } from "../AppState.js"
+import { PostLikerProfile } from "../models/Like.js"
 import { Post } from "../models/Post.js"
 import { Profile } from "../models/Profile.js"
 import { logger } from "../utils/Logger.js"
@@ -6,6 +7,13 @@ import { api } from "./AxiosService.js"
 
 
 class PostsService {
+    async likePost(postId) {
+        const response = await api.post('api/likes', postId)
+        const newProfile = new PostLikerProfile(response.data)
+        AppState.postLikeProfiles.push(newProfile)
+        const foundPost = AppState.posts.find((post) => post.id == postId.postId)
+        foundPost.likeCount += 1
+    }
     setActiveProject(postProp) {
         AppState.activePost = postProp
     }
@@ -13,7 +21,7 @@ class PostsService {
         // AppState.posts = null
 
         const response = await api.get('api/posts')
-        logger.log(response.data)
+        logger.log('GOT POSTS', response.data)
         const posts = await response.data.map(postPOJO => new Post(postPOJO))
         AppState.posts = posts
     }

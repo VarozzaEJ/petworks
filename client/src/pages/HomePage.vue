@@ -6,6 +6,7 @@ import { postsService } from '../services/PostsService.js';
 import PostCard from '../components/PostCard.vue';
 import { petsService } from "../services/PetsService.js";
 import PetOfTheDay from "../components/PetOfTheDay.vue";
+import { logger } from '../utils/Logger.js';
 
 
 
