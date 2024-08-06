@@ -84,7 +84,7 @@ async function getActiveProfilePets() {
 
     <div class="col-12 d-grid">
 
-      <button v-if="AppState.account.id == activeProfile.id" type="button" class="btn btn-primary mx-auto fw-bold fs-4"
+      <button v-if="AppState.account?.id == activeProfile.id" type="button" class="btn btn-primary mx-auto fw-bold fs-4"
         data-bs-toggle="modal" data-bs-target="#exampleModal">
         Add A Pet Now!
       </button>

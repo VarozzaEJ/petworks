@@ -1,12 +1,28 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
 import ModalWrapper from "./components/ModalWrapper.vue";
 import PostForm from "./components/PostForm.vue";
+import { postsService } from './services/PostsService.js';
+import Pop from './utils/Pop.js';
 
 
 const account = computed(() => AppState.account)
+const posts = computed(() => AppState.posts.find(post => post.id == account.value.id))
+
+onMounted(() => {
+  getAllPosts()
+})
+
+async function getAllPosts() {
+  try {
+    await postsService.getAllPosts()
+  }
+  catch (error) {
+    Pop.error('Could not get posts');
+  }
+}
 
 </script>
 
@@ -36,7 +52,7 @@ const account = computed(() => AppState.account)
           <i class=" mdi icon-select mdi-heart-outline"></i>
         </div>
         <div v-if="account" class="col-2 text-center d-flex justify-content-center align-items-center">
-          <router-link :to="{ name: 'Account' }">
+          <router-link :to="{ name: 'Profile', params: { profileId: account?.id } }">
             <div class="d-flex align-items-center">
               <img class="account-img" :src="account.picture" :alt="account.name">
             </div>

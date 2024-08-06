@@ -56,7 +56,9 @@ async function createPet() {
 
 async function getActiveProfilePosts() {
   try {
+    logger.log('🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️🧍‍♂️', account.value.id)
     await postsService.getActiveProfilePosts(account.value.id)
+
   }
   catch (error) {
     Pop.error('Could not get specific posts');
@@ -66,7 +68,6 @@ async function getActiveProfilePosts() {
 
 async function getActiveProfile() {
   try {
-
     await postsService.getActiveProfile(account.value.id)
   }
   catch (error) {
@@ -87,7 +88,7 @@ async function getActiveProfilePets() {
 </script>
 
 <template>
-  <div class="about text-center">
+  <div class="about">
     <div v-if="account">
       <div class="container">
         <div class="row my-4 justify-content-between">
@@ -175,12 +176,12 @@ async function getActiveProfilePets() {
                 aria-controls="collapseExample" class="mdi mdi-menu-down-outline"></i>
             </p>
           </div>
-
-          <div v-for="pet in activeProfilePets" :key="pet.id" id="collapseExample" class="collapse col-12 mx-0 px-0">
-            <router-link :to="{ name: 'Pets', params: { petsId: pet.id } }">
-              <PetCard :petProp="pet" />
-            </router-link>
-
+          <div v-if="activeProfilePets">
+            <div v-for="pet in activeProfilePets" :key="pet.id" id="collapseExample" class="collapse col-12 mx-0 px-0">
+              <router-link :to="{ name: 'Pets', params: { petsId: pet.id } }">
+                <PetCard :petProp="pet" />
+              </router-link>
+            </div>
           </div>
           <hr>
         </div>
@@ -191,8 +192,11 @@ async function getActiveProfilePets() {
                 aria-controls="collapsePosts" class="mdi mdi-menu-down-outline"></i>
             </p>
           </div>
-          <div v-for="post in activeProfilePosts" :key="post.id" id="collapsePosts" class="col-12 mx-0 px-0">
-            <PostCard :postProp="post" />
+          <div v-if="activeProfilePosts">
+
+            <div v-for="post in activeProfilePosts" :key="post.id" id="collapsePosts" class="col-12 mx-0 px-0">
+              <PostCard :postProp="post" />
+            </div>
           </div>
           <hr>
         </div>
@@ -206,7 +210,14 @@ async function getActiveProfilePets() {
 </template>
 
 <style scoped lang="scss">
-img {
-  max-width: 100px;
+.profilePageImg {
+  height: 15dvh;
+  width: 15dvh;
+  aspect-ratio: 1/1;
+  border-radius: 30%;
+}
+
+.hidden {
+  display: none !important;
 }
 </style>

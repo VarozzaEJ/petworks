@@ -36,7 +36,8 @@ async function likePost() {
 
 
 <template>
-  <div class="justify-content-center d-flex mb-3 mt-1">
+
+  <div v-if="AppState.posts" class="justify-content-center d-flex mb-3 mt-1">
     <div class="card bg-primary shadow" style="width: 100dvh;">
       <div class="card-title bg-primary">
         <div class="">
