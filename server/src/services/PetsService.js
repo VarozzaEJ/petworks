@@ -18,8 +18,8 @@ class PetsService {
   async getRandomPet() {
     const pets = await dbContext.Pets.find().populate('owner')
     const randomPetIndex = Math.floor(Math.random() * pets.length)
-    const randomPet = pets[randomPetIndex]
-    return randomPet
+    const petOfTheDay = pets[randomPetIndex]
+
   }
 }
 
