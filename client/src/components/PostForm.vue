@@ -11,7 +11,7 @@ defineProps({
 const editablePostData = ref({
   body: '',
   imgUrl: '',
-  petTags: ['']
+  petTags: ''
 })
 
 async function createPost() {
@@ -29,7 +29,7 @@ function resetForm() {
   editablePostData.value = {
     body: '',
     imgUrl: '',
-    petTags: ['']
+    petTags: ''
   }
 }
 </script>
@@ -59,7 +59,7 @@ function resetForm() {
       <label for="body">Make a Post!</label>
       <textarea v-model="editablePostData.body" class="form-control" id="body" maxlength="300" required></textarea>
     </div>
-    <select class="form-select" multiple>
+    <select v-model="editablePostData.petTags" class="form-select" multiple>
       <option v-for="pet in account?.pets" :key="pet.id" :value="pet.id">{{ pet.name }}</option>
     </select>
     <div class="d-grid">
