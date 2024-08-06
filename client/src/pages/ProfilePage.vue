@@ -9,7 +9,6 @@ import PostCard from '../components/PostCard.vue';
 import PetCard from '../components/PetCard.vue';
 import { petsService } from '../services/PetsService.js';
 import { RouterLink } from 'vue-router';
-import { Modal } from 'bootstrap';
 
 
 
@@ -120,8 +119,8 @@ async function addPet() {
 
     <div class="col-12 d-grid">
 
-      <button type="button" class="btn btn-primary mx-auto fw-bold fs-4" data-bs-toggle="modal"
-        data-bs-target="#exampleModal">
+      <button v-if="AppState.account.id == activeProfile.id" type="button" class="btn btn-primary mx-auto fw-bold fs-4"
+        data-bs-toggle="modal" data-bs-target="#exampleModal">
         Add A Pet Now!
       </button>
     </div>
