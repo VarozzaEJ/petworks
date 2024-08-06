@@ -14,6 +14,13 @@ class PetsService {
     if (ownerId == null) throw new NotFound(`The owner with this id ${ownerId} has no pets`)
     return pets
   }
+
+  async getRandomPet() {
+    const pets = await dbContext.Pets.find().populate('owner')
+    const randomPetIndex = Math.floor(Math.random() * pets.length)
+    const randomPet = pets[randomPetIndex]
+    return randomPet
+  }
 }
 
 export const petsService = new PetsService()

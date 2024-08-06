@@ -7,6 +7,7 @@ export class PetsController extends BaseController {
   constructor() {
     super('api/pets')
     this.router
+      .get('/randompet', this.getRandomPet)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createPet)
   }
@@ -22,6 +23,15 @@ export class PetsController extends BaseController {
     catch (error) {
       next(error);
       logger.log('Could not create pet', error)
+    }
+  }
+
+  async getRandomPet(request, response, next) {
+    try {
+      const randomPet = await petsService.getRandomPet()
+      response.send(randomPet)
+    } catch (error) {
+      next(error)
     }
   }
 
