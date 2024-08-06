@@ -1,5 +1,6 @@
 import { AppState } from "../AppState.js"
 import { Pet } from "../models/Pet.js"
+import { logger } from "../utils/Logger.js"
 import { api } from "./AxiosService.js"
 
 
@@ -18,7 +19,13 @@ class PetsService {
     const activePets = response.data.map(petPOJO => new Pet(petPOJO))
     AppState.activePets = activePets
   }
-
+  async createPet(petData) {
+    const response = await api.post('api/pets', petData)
+    logger.log('🐕', response.data)
+    const newPet = new Pet(response.data)
+    AppState.pets.unshift(newPet)
+    return newPet
+  }
   async getPetOfTheDay() {
     const response = await api.get('api/pets/randompet')
     const petOfTheDay = new Pet(response.data)
