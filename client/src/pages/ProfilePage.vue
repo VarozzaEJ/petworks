@@ -55,7 +55,7 @@ async function createPet() {
     const newPet = await petsService.createPet(petData.value)
     Pop.success(`You did it!`)
     resetFrom()
-    Modal.getOrCreateInstance('#exampleModalx').hide()
+    Modal.getOrCreateInstance('#exampleModal').hide()
     router.push({ name: 'Pets', params: { petsId: newPet.id } })
 
   } catch (error) {
