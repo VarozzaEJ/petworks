@@ -33,7 +33,7 @@ defineProps({ petOfTheDayProp: Pet })
       </div>
     </div>
   </div>
-  <div class="card" style="width: 100dvh;">
+  <div class="card d-block d-sm-none m-3 bg-info" style="width: 100dvh;">
     <div class="card-body">
       <div>
         <p class="card-title text-center fs-3 fw-semibold mb-3">Pet of the Day</p>
@@ -48,8 +48,8 @@ defineProps({ petOfTheDayProp: Pet })
           <small class="text-body-secondary">{{ owner.name }}</small>
         </p>
       </div>
-      <img src="..." class="card-img-bottom" alt="...">
     </div>
+    <img :src="petOfTheDayProp.imgUrl" class="card-img-bottom" :alt="petOfTheDayProp.name">
   </div>
 </template>
 
