@@ -8,6 +8,7 @@ export class PetsController extends BaseController {
     super('api/pets')
     this.router
       .get('/randompet', this.getRandomPet)
+      .get('/:petId', this.getPetById)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createPet)
   }
@@ -35,5 +36,14 @@ export class PetsController extends BaseController {
     }
   }
 
+  async getPetById(request, response, next) {
+    try {
+      const petId = request.params.petId
+      const foundPet = await petsService.getPetById(petId)
+      response.send(foundPet)
+    } catch (error) {
+      next(error)
+    }
+  }
 
 }

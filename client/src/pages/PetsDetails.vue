@@ -7,14 +7,17 @@ import Pop from '../utils/Pop.js';
 import { logger } from '../utils/Logger.js';
 
 const activeProfilePosts = computed(() => AppState.activeProfilePosts)
+const activePet = computed(() => AppState.activePets)
+
 const route = useRoute()
 onMounted(() => {
   getActivePetsDetails()
 })
 
-function getActivePetsDetails() {
+async function getActivePetsDetails() {
   try {
-    petsService.getActivePetsDetails(route.params.petsId)
+    logger.log('📍📍📍📍', route.params.petId)
+    await petsService.getActivePetsDetails(route.params.petId)
   } catch (error) {
     Pop.error('Could not get pets details');
     logger.error(error)
@@ -26,19 +29,19 @@ function getActivePetsDetails() {
 <template>
 
   <div class="col-12">
-    <img class="img-fluid pet-img" src="" alt="">
+    <img class="img-fluid pet-img" :src="activePet.imgUrl" alt="">
   </div>
   <div class="card-body pt-4 bg-primary d-flex flex-column align-items-center ">
-    <p class="fs-1 fw-bold">Maxwell</p>
+    <p class="fs-1 fw-bold">{{ activePet.name }}</p>
     <div class="card bg-primary border-0" style="width: 18rem;">
-      <p class="bg-subtle p-1">Sociability:</p>
+      <p class="bg-subtle p-1">Sociability: </p>
       <p class="bg-subtle p-1">Obedience:</p>
       <p class="bg-subtle p-1">Loudness:</p>
       <p class="bg-subtle p-1">Protectiveness:</p>
       <p class="bg-subtle p-1">Energy:</p>
       <p class="bg-subtle p-1">Cleanliness:</p>
       <div class=" pt-3 d-flex justify-content-center">
-        <p class="fs-5">This is my bubby Maximillian. He is the chonkiest boy. I love him.</p>
+        <p class="fs-5">{{ activePet.bio }}</p>
       </div>
     </div>
   </div>

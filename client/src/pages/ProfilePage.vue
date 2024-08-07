@@ -192,7 +192,7 @@ async function getActiveProfilePets() {
       </div>
 
       <div v-for="pet in activeProfilePets" :key="pet.id" id="collapseExample" class="collapse col-12 mx-0 px-0">
-        <router-link :to="{ name: 'Pets', params: { petsId: pet.id } }">
+        <router-link :to="{ name: 'Pets', params: { petId: pet.id } }">
           <PetCard :petProp="pet" />
         </router-link>
 

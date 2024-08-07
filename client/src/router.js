@@ -22,7 +22,7 @@ const routes = [
     component: loadPage('ProfilePage')
   },
   {
-    path: '/petsDetails/:petsId',
+    path: '/pets/:petId',
     name: 'Pets',
     component: loadPage('PetsDetails')
   },

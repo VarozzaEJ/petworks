@@ -8,6 +8,12 @@ const petOfTheDayCache = {
 }
 
 class PetsService {
+  async getPetById(petId) {
+    const foundPet = await dbContext.Pets.findById(petId).populate('owner')
+    if (foundPet == null) throw new NotFound(`There is not a pet with the id of ${petId}`)
+    return foundPet
+    //NOTE {id: petId} is more than likely wrong. Not sure what property on the pet schema I need to look for.
+  }
 
   async createPet(petData) {
     const pet = await dbContext.Pets.create(petData)
