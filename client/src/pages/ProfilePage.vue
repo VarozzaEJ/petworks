@@ -14,7 +14,6 @@ import { router } from '../router.js';
 
 
 
-
 const route = useRoute()
 
 
@@ -24,8 +23,16 @@ const petData = ref({
   imgUrl: '',
   species: '',
   breed: '',
-  birthday: ''
+  birthday: '',
+  petStats: [
+    {
+      attribute: '',
+      value: 1,
+    }
+  ]
 })
+
+
 
 function resetFrom() {
   petData.value = {
@@ -34,7 +41,13 @@ function resetFrom() {
     imgUrl: '',
     species: '',
     breed: '',
-    birthday: ''
+    birthday: '',
+    petStats: [
+      {
+        attribute: '',
+        value: 1,
+      }
+    ]
   }
 }
 
@@ -95,6 +108,9 @@ async function getActiveProfilePets() {
   }
 }
 
+function addAttribute() {
+  petData.value.petStats.push({ attribute: '', value: 1 })
+}
 
 </script>
 
@@ -130,7 +146,7 @@ async function getActiveProfilePets() {
 
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="exampleModalLabel">Tell Us About Your Best Friend</h1>
@@ -152,7 +168,7 @@ async function getActiveProfilePets() {
               <div class="mb-3">
                 <label for="pet-img">Image URL</label>
                 <input v-model="petData.imgUrl" class="form-control" type="url" id="event-img" name="pet-img"
-                  maxlength="3000" placeholder="Pic of Same" required>
+                  maxlength="3000" placeholder="" required>
               </div>
 
               <div class="mb-3">
@@ -167,9 +183,21 @@ async function getActiveProfilePets() {
                   aria-describedby="petEnergy" minlength=" 1" maxlength="5" placeholder="😜" required>
               </div>
               <div class="mb-3">
-                <label for="pet-species">What is Your Pet Species</label>
+                <label for="pet-species">Pet Species</label>
                 <input v-model="petData.species" class="form-control" type="text" id="pet-species" name="pet-species"
                   required>
+              </div>
+              <div class="mb-3">
+                <label for="pet-stats">Pet Attributes</label>
+                <button @click="addAttribute()" type="button" class="btn btn-secondary ms-2 mb-2"><i
+                    class="mdi mdi-plus"></i></button>
+                <div v-for="petStat in petData.petStats" :key="petStat.attribute">
+                  <input v-model="petStat.attribute" class="form-control mb-1" type="text" id="pet-stats"
+                    name="pet-stats" required>
+                  <input v-model="petStat.value" class="form-control mb-3" type="range" min="1" max="5" id="pet-stats"
+                    name="pet-stats" required>
+                </div>
+
               </div>
 
             </div>
