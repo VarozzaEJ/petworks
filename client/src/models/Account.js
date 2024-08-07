@@ -8,6 +8,7 @@ export class Account {
     this.name = data.name
     this.picture = data.picture
     // TODO add additional properties if needed
+    /** @type {Pet[]} */
     this.pets = data.pets
     this.tagline = data.tagline
   }

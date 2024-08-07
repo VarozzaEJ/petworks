@@ -11,7 +11,7 @@ defineProps({
 const editablePostData = ref({
   body: '',
   imgUrl: '',
-  petTags: ['']
+  petTags: []
 })
 
 async function createPost() {
@@ -25,18 +25,27 @@ async function createPost() {
   }
 }
 
+function selectPet(petId) {
+  let petTags = editablePostData.value.petTags
+  if (petTags.includes(petId)) {
+    editablePostData.value.petTags = petTags.filter(id => id != petId)
+  } else {
+    petTags.push(petId)
+  }
+}
+
 function resetForm() {
   editablePostData.value = {
     body: '',
     imgUrl: '',
-    petTags: ['']
+    petTags: []
   }
 }
 </script>
 
 
 <template>
-  <form @submit.prevent="createPost()" class="row justify-content-center">
+  <form v-if="account" @submit.prevent="createPost()" class="row justify-content-center">
     <div class="col-8 mb-3">
       <label class="form-label">Image Preview</label>
       <div class="d-flex justify-content-center">
@@ -59,9 +68,17 @@ function resetForm() {
       <label for="body">Make a Post!</label>
       <textarea v-model="editablePostData.body" class="form-control" id="body" maxlength="300" required></textarea>
     </div>
-    <select v-model="editablePostData.petTags" class="form-select" multiple>
+    <!-- <select v-model="editablePostData.petTags" class="form-select" multiple>
       <option v-for="pet in account?.pets" :key="pet.id" :value="pet.id">{{ pet.name }}</option>
-    </select>
+    </select> -->
+    <section class="row">
+      <div class="col-12">Tag Your Pets</div>
+      <div v-for="pet in account.pets" :key="`pet-tag-${pet.id}`" class="col-3">
+        <img @click="selectPet(pet.id)" class="pet-tag selectable text-success"
+          :class="{ 'selected': editablePostData.petTags.includes(pet.id) }" :src="pet.imgUrl" alt="">
+      </div>
+    </section>
+
     <div class="d-grid">
       <button type="submit" class="btn btn-danger fw-bold">Make Post</button>
     </div>
@@ -76,6 +93,13 @@ textarea {
   height: 27vh !important;
 }
 
+.pet-tag {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+
+}
+
 .img-preview {
   height: 25vh;
   width: 25vh;
@@ -84,10 +108,11 @@ textarea {
   background-color: var(--bs-secondary);
 }
 
-img {
-  height: 35vh;
-  width: 35vh;
-  object-fit: cover;
-  object-position: center;
+.selected {
+  border: 3px solid var(--bs-success);
+
+  &::after {
+    background-color: rgba(0, 128, 0, 0.432);
+  }
 }
 </style>
