@@ -46,7 +46,7 @@ async function createPet() {
     Pop.success(`You did it!`)
     resetFrom()
     // Modal.getOrCreateInstance('#staticBackdrop').hide()
-    router.push({ name: 'Pets', params: { ownerId: newPet.id } })
+    router.push({ name: 'Pets', params: { petsId: newPet.id } })
 
   } catch (error) {
     Pop.toast('No pets for you', 'error', 'center-start')
