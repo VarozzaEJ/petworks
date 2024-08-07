@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { AppState } from '../AppState.js';
 import Pop from '../utils/Pop.js';
@@ -9,12 +9,34 @@ import PostCard from '../components/PostCard.vue';
 import PetCard from '../components/PetCard.vue';
 import { petsService } from '../services/PetsService.js';
 import { RouterLink } from 'vue-router';
-
+import { Modal } from 'bootstrap';
+import { router } from '../router.js';
 
 
 
 
 const route = useRoute()
+
+
+const petData = ref({
+  name: '',
+  bio: '',
+  imgUrl: '',
+  species: '',
+  breed: '',
+  birthday: ''
+})
+
+function resetFrom() {
+  petData.value = {
+    name: '',
+    bio: '',
+    imgUrl: '',
+    species: '',
+    breed: '',
+    birthday: ''
+  }
+}
 
 
 const activeProfilePets = computed(() => AppState.activeProfilePets)
@@ -28,6 +50,19 @@ onMounted(() => {
 
 })
 
+async function createPet() {
+  try {
+    const newPet = await petsService.createPet(petData.value)
+    Pop.success(`You did it!`)
+    resetFrom()
+    Modal.getOrCreateInstance('#exampleModalx').hide()
+    router.push({ name: 'Pets', params: { petsId: newPet.id } })
+
+  } catch (error) {
+    Pop.toast('No pets for you', 'error', 'center-start')
+    logger.error(error)
+  }
+}
 
 async function getActiveProfilePosts() {
   try {
@@ -82,6 +117,8 @@ async function getActiveProfilePets() {
     </div>
 
 
+
+
     <div class="col-12 d-grid">
 
       <button v-if="AppState.account?.id == activeProfile.id" type="button" class="btn btn-primary mx-auto fw-bold fs-4"
@@ -89,6 +126,63 @@ async function getActiveProfilePets() {
         Add A Pet Now!
       </button>
     </div>
+
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Tell Us About Your Best Friend</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <form @submit.prevent="createPet">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="inputPetName" class="form-label">Pet Name</label>
+                <input v-model="petData.name" required type="text" class="form-control" id="inputPetName"
+                  aria-describedby="petName" minlength="3" maxlength="50" placeholder="Sam">
+              </div>
+              <div class="mb-3">
+                <label for="petDescription" class="form-label">Pet Description</label>
+                <input v-model="petData.bio" type="text" class="form-control" id="petDescription"
+                  aria-describedby="petDescription" minlength=" 3" maxlength="50" placeholder="Sam is my BFF" required>
+              </div>
+              <div class="mb-3">
+                <label for="pet-img">Image URL</label>
+                <input v-model="petData.imgUrl" class="form-control" type="url" id="event-img" name="pet-img"
+                  maxlength="3000" placeholder="Pic of Same" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="pet-birth">When Was Your Pet born</label>
+                <input v-model="petData.birthday" class="form-control" type="date" id="pet-birth" name="pet-birth"
+                  required>
+              </div>
+
+              <div class="mb-3">
+                <label for="petEnergy" class="form-label">Pet breed </label>
+                <input v-model="petData.breed" type="text" class="form-control" id="petEnergy"
+                  aria-describedby="petEnergy" minlength=" 1" maxlength="5" placeholder="😜" required>
+              </div>
+              <div class="mb-3">
+                <label for="pet-species">What is Your Pet Species</label>
+                <input v-model="petData.species" class="form-control" type="text" id="pet-species" name="pet-species"
+                  required>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Add Pet!!!</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
     <div class="row">
       <div class="col-12 mx-0 px-0 pt-3">
         <p class="text-center fs-4">
