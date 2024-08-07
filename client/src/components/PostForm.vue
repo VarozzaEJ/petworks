@@ -11,7 +11,7 @@ defineProps({
 const editablePostData = ref({
   body: '',
   imgUrl: '',
-  petTags: ''
+  petTags: ['']
 })
 
 async function createPost() {
@@ -29,7 +29,7 @@ function resetForm() {
   editablePostData.value = {
     body: '',
     imgUrl: '',
-    petTags: ''
+    petTags: ['']
   }
 }
 </script>

@@ -27,6 +27,7 @@ class PetsService {
     return newPet
   }
   async getPetOfTheDay() {
+    AppState.petOfTheDay = null
     const response = await api.get('api/pets/randompet')
     const petOfTheDay = new Pet(response.data)
     AppState.petOfTheDay = petOfTheDay
