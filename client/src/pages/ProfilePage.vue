@@ -18,6 +18,27 @@ import { router } from '../router.js';
 const route = useRoute()
 
 
+const petData = ref({
+  name: '',
+  bio: '',
+  imgUrl: '',
+  species: '',
+  breed: '',
+  birthday: ''
+})
+
+function resetFrom() {
+  petData.value = {
+    name: '',
+    bio: '',
+    imgUrl: '',
+    species: '',
+    breed: '',
+    birthday: ''
+  }
+}
+
+
 const activeProfilePets = computed(() => AppState.activeProfilePets)
 const activeProfilePosts = computed(() => AppState.activeProfilePosts)
 const activeProfile = computed(() => AppState.activeProfile)
@@ -29,38 +50,17 @@ onMounted(() => {
 
 })
 
-
-const petData = ref({
-  name: '',
-  bio: '',
-  imgUrl: '',
-  species: '',
-  breed: '',
-  birthday: ''
-})
-
 async function createPet() {
   try {
     const newPet = await petsService.createPet(petData.value)
     Pop.success(`You did it!`)
     resetFrom()
-    Modal.getOrCreateInstance('#staticBackdrop').hide()
-    router.push({ name: 'Pets', params: { petId: newPet.id } })
+    Modal.getOrCreateInstance('#exampleModalx').hide()
+    router.push({ name: 'Pets', params: { petsId: newPet.id } })
 
   } catch (error) {
     Pop.toast('No pets for you', 'error', 'center-start')
     logger.error(error)
-  }
-}
-
-function resetFrom() {
-  petData.value = {
-    name: '',
-    bio: '',
-    imgUrl: '',
-    species: '',
-    breed: '',
-    birthday: ''
   }
 }
 
@@ -117,13 +117,16 @@ async function getActiveProfilePets() {
     </div>
 
 
+
+
     <div class="col-12 d-grid">
 
-      <button v-if="AppState.account.id == activeProfile.id" type="button" class="btn btn-primary mx-auto fw-bold fs-4"
+      <button v-if="AppState.account?.id == activeProfile.id" type="button" class="btn btn-primary mx-auto fw-bold fs-4"
         data-bs-toggle="modal" data-bs-target="#exampleModal">
         Add A Pet Now!
       </button>
     </div>
+
 
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -133,7 +136,6 @@ async function getActiveProfilePets() {
             <h1 class="modal-title fs-5" id="exampleModalLabel">Tell Us About Your Best Friend</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-
 
           <form @submit.prevent="createPet">
             <div class="modal-body">
@@ -176,11 +178,11 @@ async function getActiveProfilePets() {
               <button type="submit" class="btn btn-primary">Add Pet!!!</button>
             </div>
           </form>
-
-
         </div>
       </div>
     </div>
+
+
     <div class="row">
       <div class="col-12 mx-0 px-0 pt-3">
         <p class="text-center fs-4">

@@ -9,7 +9,6 @@ import { logger } from '../utils/Logger.js';
 const activeProfilePosts = computed(() => AppState.activeProfilePosts)
 const route = useRoute()
 onMounted(() => {
-
   getActivePetsDetails()
 })
 

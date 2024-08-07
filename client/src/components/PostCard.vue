@@ -36,7 +36,8 @@ async function likePost() {
 
 
 <template>
-  <div class="justify-content-center d-flex mb-3 mt-1">
+
+  <div v-if="AppState.posts" class="justify-content-center d-flex mb-3 mt-1">
     <div class="card bg-primary shadow" style="width: 100dvh;">
       <div class="card-title bg-primary">
         <div class="">
@@ -57,8 +58,8 @@ async function likePost() {
         <img :src="postProp.imgUrl" class="post-img img-fluid" :alt="`An image of an event with the type of`">
       </div>
       <div class="card-body bg-primary d-flex align-items-center justify-content-between">
-        <p class="mb-0 fs-5">{{ postProp.commentCount }} <i class="mdi mdi-comment-outline"></i></p>
-        <p class="mb-0 fs-5"><i @click="likePost()" class="mdi mdi-heart-outline"></i>{{ foundPost.likeCount }}
+        <p class="mb-0 fs-5">{{ postProp?.commentCount }} <i class="mdi mdi-comment-outline"></i></p>
+        <p class="mb-0 fs-5"><i @click="likePost()" class="mdi mdi-heart-outline"></i>{{ foundPost?.likeCount }}
         </p>
       </div>
     </div>
