@@ -12,12 +12,14 @@ class PetsService {
     const activeProfilePets = response.data.map(petPOJO => new Pet(petPOJO))
     AppState.activeProfilePets = activeProfilePets
   }
-  async getActivePetsDetails(petsId) {
+  async getActivePetsDetails(petId) {
     AppState.activePets = null
     //                           path: '/petsDetails/:petsId',
-    const response = await api.get(`api/petsDetails/${petsId}`)
-    const activePets = response.data.map(petPOJO => new Pet(petPOJO))
-    AppState.activePets = activePets
+    const response = await api.get(`api/pets/${petId}`)
+    const newPet = new Pet(response.data)
+    AppState.activePets = newPet
+    logger.log('🐶🐶🐶🐶', newPet)
+    return newPet
   }
   async createPet(petData) {
     const response = await api.post('api/pets', petData)
