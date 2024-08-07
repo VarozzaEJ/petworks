@@ -10,7 +10,7 @@ defineProps({ petOfTheDayProp: Pet })
   <div class=" d-none d-sm-block card m-3 bg-info shadow" style="width: 100dvh; height: 33dvh">
     <div class="row g-0">
       <div class="col-3">
-        <RouterLink :to="{ name: 'Pets', params: { petsId: petOfTheDayProp.id } }">
+        <RouterLink :to="{ name: 'Pets', params: { petId: petOfTheDayProp.id } }">
           <img :src="petOfTheDayProp.imgUrl" class="img-fluid rounded-start hero-img" :alt="petOfTheDayProp.name">
         </RouterLink>
       </div>
