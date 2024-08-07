@@ -28,7 +28,7 @@ const petData = ref({
     {
       attribute: '',
       value: 1,
-    }
+    },
   ]
 })
 
@@ -46,7 +46,7 @@ function resetFrom() {
       {
         attribute: '',
         value: 1,
-      }
+      },
     ]
   }
 }
@@ -65,14 +65,14 @@ onMounted(() => {
 
 async function createPet() {
   try {
+    logger.log('🦎🦎🦎🦎🦎🦎🦎', petData.value)
     const newPet = await petsService.createPet(petData.value)
-    Pop.success(`You did it!`)
+    Pop.success(`Pet Created!`)
     resetFrom()
     Modal.getOrCreateInstance('#exampleModal').hide()
-    router.push({ name: 'Pets', params: { petsId: newPet.id } })
-
+    router.push({ name: 'Pets', params: { petId: newPet.id } })
   } catch (error) {
-    Pop.toast('No pets for you', 'error', 'center-start')
+    Pop.toast('Error creating pet', 'error', 'center-start')
     logger.error(error)
   }
 }
@@ -191,11 +191,11 @@ function addAttribute() {
                 <label for="pet-stats">Pet Attributes</label>
                 <button @click="addAttribute()" type="button" class="btn btn-secondary ms-2 mb-2"><i
                     class="mdi mdi-plus"></i></button>
-                <div v-for="petStat in petData.petStats" :key="petStat.attribute">
-                  <input v-model="petStat.attribute" class="form-control mb-1" type="text" id="pet-stats"
-                    name="pet-stats" required>
-                  <input v-model="petStat.value" class="form-control mb-3" type="range" min="1" max="5" id="pet-stats"
-                    name="pet-stats" required>
+                <div v-for="(petStat, i) in petData.petStats">
+                  <input v-model="petStat.attribute" class="form-control mb-1" type="text"
+                    :id="'pet-stats-attribute-' + i" name="pet-stats-attribute" required>
+                  <input v-model="petStat.value" class="form-control mb-3" type="range" min="1" max="5"
+                    :id="'pet-stats-value-' + i" name="pet-stats-value" required>
                 </div>
 
               </div>
