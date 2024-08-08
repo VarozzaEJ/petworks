@@ -2,6 +2,7 @@ import { Auth0Provider } from "@bcwdev/auth0provider";
 import { petsService } from "../services/PetsService.js";
 import BaseController from "../utils/BaseController.js";
 import { logger } from "../utils/Logger.js";
+import { petTagsService } from "../services/PetTagsService.js";
 
 export class PetsController extends BaseController {
   constructor() {
@@ -9,6 +10,7 @@ export class PetsController extends BaseController {
     this.router
       .get('/randompet', this.getRandomPet)
       .get('/:petId', this.getPetById)
+      .get('/:petId/petPosts', this.getPetPosts)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createPet)
   }
@@ -41,6 +43,17 @@ export class PetsController extends BaseController {
       const petId = request.params.petId
       const foundPet = await petsService.getPetById(petId)
       response.send(foundPet)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+
+  async getPetPosts(request, response, next) {
+    try {
+      const petId = request.params.petId
+      const petPosts = await petTagsService.getPetTagsByPetId(petId)
+      response.send(petPosts)
     } catch (error) {
       next(error)
     }
