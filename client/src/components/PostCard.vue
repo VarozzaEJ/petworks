@@ -13,7 +13,7 @@ const props = defineProps({ postProp: { type: Post, required: true } })
 const route = useRoute()
 const router = useRouter()
 const foundPost = computed(() => AppState.posts.find(postData => postData.id == props.postProp.id)) //NOTE more than likely the wrong thing to find the specific post
-
+const account = computed(() => AppState.account)
 
 
 async function setActiveProject() {
@@ -59,7 +59,8 @@ async function likePost() {
       </div>
       <div class="card-body bg-primary d-flex align-items-center justify-content-between">
         <p class="mb-0 fs-5">{{ postProp?.commentCount }} <i class="mdi mdi-comment-outline"></i></p>
-        <p class="mb-0 fs-5"><i @click="likePost()" class="mdi mdi-heart-outline"></i>{{ foundPost?.likeCount }}
+        <p :disabled="account?.id == foundPost.id" class="mb-0 fs-5"><i @click="likePost()"
+            class="mdi mdi-heart-outline"></i>{{ foundPost?.likeCount }}
         </p>
       </div>
     </div>

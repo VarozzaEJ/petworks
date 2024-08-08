@@ -4,22 +4,22 @@ import { likesService } from "../services/LikesService.js";
 
 
 export class LikesController extends BaseController {
-    constructor() {
-        super('api/likes')
-        this.router
-            .use(Auth0Provider.getAuthorizedUserInfo)
-            .post('', this.likePost)
-    }
+  constructor() {
+    super('api/likes')
+    this.router
+      .use(Auth0Provider.getAuthorizedUserInfo)
+      .post('', this.likePost)
+  }
 
-    async likePost(request, response, next) {
-        try {
-            const user = request.userInfo
-            const likeData = request.body
-            likeData.accountId = user.id
-            const newTicket = await likesService.likePost(likeData)
-            response.send(newTicket)
-        } catch (error) {
-            next(error)
-        }
+  async likePost(request, response, next) {
+    try {
+      const user = request.userInfo
+      const likeData = request.body
+      likeData.accountId = user.id
+      const newTicket = await likesService.likePost(likeData)
+      response.send(newTicket)
+    } catch (error) {
+      next(error)
     }
+  }
 }
