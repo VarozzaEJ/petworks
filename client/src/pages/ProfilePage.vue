@@ -193,7 +193,7 @@ function addAttribute() {
                     class="mdi mdi-plus"></i></button>
                 <div v-for="(petStat, i) in petData.petStats">
                   <input v-model="petStat.attribute" class="form-control mb-1" type="text"
-                    :id="'pet-stats-attribute-' + i" name="pet-stats-attribute" required>
+                    :id="'pet-stats-attribute-' + i" name="pet-stats-attribute" minlength="3" maxlength="15" required>
                   <input v-model="petStat.value" class="form-control mb-3" type="range" min="1" max="5"
                     :id="'pet-stats-value-' + i" name="pet-stats-value" required>
                 </div>
@@ -212,11 +212,11 @@ function addAttribute() {
 
 
     <div class="row">
-      <div class="col-12 mx-0 px-0 pt-3">
-        <p class="text-center fs-4">
-          Pets <i role="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false"
-            aria-controls="collapseExample" class="mdi mdi-menu-down-outline"></i>
-        </p>
+      <div class="col-12 d-flex justify-content-center mx-0 px-0 pt-3">
+
+        <button class="btn btn-subtle-outline" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+          aria-expanded="false" aria-controls="collapseExample">Pets
+          <i class="mdi mdi-menu-down-outline"></i></button>
       </div>
 
       <div v-for="pet in activeProfilePets" :key="pet.id" id="collapseExample" class="collapse col-12 mx-0 px-0">
@@ -230,11 +230,12 @@ function addAttribute() {
     <div class="container">
 
       <div class="row">
-        <div class="col-12 mx-0 px-0">
-          <p class="text-center fs-4">
-            Posts <i role="button" data-bs-toggle="collapse" data-bs-target="#collapsePosts" aria-expanded="false"
-              aria-controls="collapsePosts" class="mdi mdi-menu-down-outline"></i>
-          </p>
+        <div class="col-12 d-flex justify-content-center mx-0 px-0">
+
+          <button class="btn btn-subtle-outline" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePosts"
+            aria-expanded="false" aria-controls="collapsePosts">Posts
+            <i class="mdi mdi-menu-down-outline"></i></button>
+
         </div>
         <div v-for="post in activeProfilePosts" :key="post.id" id="collapsePosts" class="col-12 mx-0 px-0">
           <PostCard :postProp="post" />

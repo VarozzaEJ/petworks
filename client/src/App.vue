@@ -6,6 +6,8 @@ import ModalWrapper from "./components/ModalWrapper.vue";
 import PostForm from "./components/PostForm.vue";
 import { postsService } from './services/PostsService.js';
 import Pop from './utils/Pop.js';
+import { logger } from './utils/Logger.js';
+import { petsService } from './services/PetsService.js';
 
 
 const account = computed(() => AppState.account)
@@ -21,6 +23,16 @@ async function getAllPosts() {
   }
   catch (error) {
     Pop.error('Could not get posts');
+  }
+}
+
+async function drawProfile() {
+  try {
+    await postsService.getActiveProfile(account.value.id)
+    await petsService.getActiveProfilePets(account.value.id)
+    await postsService.getActiveProfilePosts(account.value.id)
+  } catch (error) {
+    logger.error(error)
   }
 }
 
@@ -53,7 +65,7 @@ async function getAllPosts() {
         </div>
         <div v-if="account" class="col-2 text-center d-flex justify-content-center align-items-center">
           <router-link :to="{ name: 'Profile', params: { profileId: account?.id } }">
-            <div class="d-flex align-items-center">
+            <div @click="drawProfile()" class="d-flex align-items-center">
               <img class="account-img" :src="account.picture" :alt="account.name">
             </div>
           </router-link>
