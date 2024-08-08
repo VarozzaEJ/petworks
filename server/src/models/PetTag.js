@@ -7,14 +7,14 @@ export const PetTagSchema = new Schema({
   creatorId: { type: Schema.ObjectId, ref: 'Account', required: true }
 }, { toJSON: { virtuals: true } })
 
-PetTagSchema.virtual('pets', {
+PetTagSchema.virtual('pet', {
   localField: 'petId',
   ref: 'Pet',
   foreignField: '_id',
   justOne: true
 })
 
-PetTagSchema.virtual('posts', {
+PetTagSchema.virtual('post', {
   localField: 'postId',
   ref: 'Post',
   foreignField: '_id',

@@ -1,6 +1,8 @@
+import { Post } from "./Post"
 
 export class PetTag {
   constructor(data) {
+    this.id = data.id || data._id
     this.petId = data.petId
     this.postId = data.postId
     this.creatorId = data.creatorId
@@ -10,7 +12,7 @@ export class PetTag {
 export class PetPost extends PetTag {
   constructor(data) {
     super()
-    this.posts = data.posts
+    this.post = new Post(data.post)
   }
 }
 

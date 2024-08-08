@@ -5,8 +5,9 @@ import { petsService } from '../services/PetsService.js';
 import { useRoute } from 'vue-router';
 import Pop from '../utils/Pop.js';
 import { logger } from '../utils/Logger.js';
+import { petTagsService } from "../services/PetTagsService.js";
 
-const activeProfilePosts = computed(() => AppState.activeProfilePosts)
+const petPosts = computed(() => AppState.petPosts)
 const activePet = computed(() => AppState.activePets)
 
 const route = useRoute()
@@ -26,7 +27,7 @@ async function getActivePetsDetails() {
 
 async function getPetPosts() {
   try {
-    await petsService.getPetPosts(route.params.petId)
+    await petTagsService.getPetPosts(route.params.petId)
   } catch (error) {
     Pop.error(error);
   }
@@ -91,9 +92,7 @@ async function getPetPosts() {
             <div class="move-down handle bg-primary ms-1 d-flex  align-items-center"></div>
             <div class="move-down handle bg-primary ms-1 me-2 d-flex  align-items-center"></div>
           </div>
-
         </div>
-
       </div>
 
       <div class=" pt-3 d-flex justify-content-center">
@@ -114,8 +113,8 @@ async function getPetPosts() {
       <div class="col">
         <div class="collapse multi-collapse" id="multiCollapseExample2">
           <div class="card card-body">
-            <div v-for="post in activeProfilePosts" :key="post.id" class="col-12 mx-0 px-0">
-              <PostCard :postProp="post" />
+            <div v-for="petPost in petPosts" :key="petPost.post.id" class="col-12 mx-0 px-0">
+              <PostCard :postProp="petPost.post" />
             </div>
           </div>
         </div>

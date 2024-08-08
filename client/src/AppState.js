@@ -5,6 +5,7 @@ import PetOfTheDay from "./components/PetOfTheDay.vue"
 export const AppState = reactive({
   /**@type {import('@bcwdev/auth0provider-client').Identity} */
   identity: null,
+
   /** @type {import('./models/Account.js').Account} user info from the database*/
   account: null,
 
@@ -19,6 +20,7 @@ export const AppState = reactive({
 
   /** @type {import('./models/Pet.js').Pet[]} user info from the database*/
   pets: [],
+
   /** @type {import('./models/Pet.js').Pet} user info from the database*/
   activePets: null,
 
@@ -34,7 +36,9 @@ export const AppState = reactive({
   /** @type {import('./models/Pet.js').Pet} user info from the database*/
   petOfTheDay: null,
 
-
   /** @type {import('./models/Like.js').PostLikerProfile[]} user info from the database*/
   postLikeProfiles: [],
+
+  /** @type {import('./models/PetTag.js').PetPost[]} an array of posts connected to a pet*/
+  petPosts: []
 })
