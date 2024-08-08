@@ -43,6 +43,7 @@ async function createPost() {
     logger.log(editablePostData.value)
     await postsService.createPost(editablePostData.value)
     Modal.getOrCreateInstance('#newPostForm').hide()
+    Pop.success("Created Post")
     resetForm()
   }
   catch (error) {

@@ -20,7 +20,8 @@ const route = useRoute()
 const petData = ref({
   name: '',
   bio: '',
-  imgUrl: '',
+  file: null,
+  previewUrl: '',
   species: '',
   breed: '',
   birthday: '',
@@ -38,7 +39,8 @@ function resetFrom() {
   petData.value = {
     name: '',
     bio: '',
-    imgUrl: '',
+    file: null,
+    previewUrl: '',
     species: '',
     breed: '',
     birthday: '',
@@ -66,6 +68,8 @@ onMounted(() => {
 async function createPet() {
   try {
     logger.log('🦎🦎🦎🦎🦎🦎🦎', petData.value)
+    const fileUrl = await petsService.getFileUrl(petData.value.file)
+    petData.value.file = fileUrl
     const newPet = await petsService.createPet(petData.value)
     Pop.success(`Pet Created!`)
     resetFrom()
@@ -73,6 +77,18 @@ async function createPet() {
     router.push({ name: 'Pets', params: { petId: newPet.id } })
   } catch (error) {
     Pop.toast('Error creating pet', 'error', 'center-start')
+    logger.error(error)
+  }
+}
+
+async function selectFile(event) {
+  try {
+    const file = event.target.files[0]
+    petData.value.file = file
+    petData.value.previewUrl = URL.createObjectURL(file)
+  }
+  catch (error) {
+    Pop.error("Could not select file");
     logger.error(error)
   }
 }
@@ -158,17 +174,29 @@ function addAttribute() {
               <div class="mb-3">
                 <label for="inputPetName" class="form-label">Pet Name</label>
                 <input v-model="petData.name" required type="text" class="form-control" id="inputPetName"
-                  aria-describedby="petName" minlength="3" maxlength="50" placeholder="Sam">
+                  aria-describedby="petName" minlength="3" maxlength="50">
               </div>
               <div class="mb-3">
                 <label for="petDescription" class="form-label">Pet Description</label>
                 <input v-model="petData.bio" type="text" class="form-control" id="petDescription"
-                  aria-describedby="petDescription" minlength=" 3" maxlength="50" placeholder="Sam is my BFF" required>
+                  aria-describedby="petDescription" minlength=" 3" maxlength="50">
               </div>
               <div class="mb-3">
-                <label for="pet-img">Image URL</label>
-                <input v-model="petData.imgUrl" class="form-control" type="url" id="event-img" name="pet-img"
-                  maxlength="3000" placeholder="" required>
+                <label class="form-label">Image Preview</label>
+                <div class="d-flex justify-content-center">
+                  <div v-if="!petData.previewUrl"
+                    class="bg-subtle rounded img-preview d-flex justify-content-center align-items-center">
+                    <i class="mdi mdi-image display-1"></i>
+                  </div>
+                  <div v-else>
+                    <img class="rounded preview-img" :src="petData.previewUrl" :alt="`${petData.previewUrl}`">
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="imgUrl" class="form-label">Image File</label>
+                <input @change="selectFile" name="file" type="file" multiple="false" accept="image/*"
+                  class="form-control" id="imgUrl" maxlength="1000">
               </div>
 
               <div class="mb-3">
@@ -180,7 +208,7 @@ function addAttribute() {
               <div class="mb-3">
                 <label for="petEnergy" class="form-label">Pet breed </label>
                 <input v-model="petData.breed" type="text" class="form-control" id="petEnergy"
-                  aria-describedby="petEnergy" minlength=" 1" maxlength="5" placeholder="😜" required>
+                  aria-describedby="petEnergy" minlength=" 1" maxlength="5" required>
               </div>
               <div class="mb-3">
                 <label for="pet-species">Pet Species</label>
@@ -258,5 +286,10 @@ function addAttribute() {
 
 .hidden {
   display: none !important;
+}
+
+.preview-img {
+  width: 200px;
+  height: 200px;
 }
 </style>
