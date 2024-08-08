@@ -44,7 +44,7 @@ async function getPetOfTheDay() {
       <div v-if="petOfTheDay" class="col-12 d-flex justify-content-center mx-0 px-0">
         <PetOfTheDay :petOfTheDayProp="petOfTheDay" />
       </div>
-      <div v-for="post in posts" :key="post.id" class="col-12 mx-0 px-0">
+      <div v-for="post in posts" :key="post.id" class="col-12  mx-0 px-0">
         <PostCard :postProp="post" />
       </div>
     </div>
