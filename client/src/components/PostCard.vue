@@ -4,16 +4,22 @@ import { Post } from '../models/Post.js';
 import PostSpotlight from './PostSpotlight.vue';
 import { postsService } from '../services/PostsService.js';
 import { logger } from '../utils/Logger.js';
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { AppState } from '../AppState.js';
 import Pop from '../utils/Pop.js';
+import { Account } from '../models/Account.js';
 
 
 const props = defineProps({ postProp: { type: Post, required: true } })
 const route = useRoute()
 const router = useRouter()
 const foundPost = computed(() => AppState.posts.find(postData => postData.id == props.postProp.id)) //NOTE more than likely the wrong thing to find the specific post
+const account = computed(() => AppState.account)
 
+onMounted(() => {
+  logger.log("account", AppState.account)
+  // logger.log("foundPost", foundPost.value.id)
+})
 
 
 async function setActiveProject() {
@@ -59,7 +65,13 @@ async function likePost() {
       </div>
       <div class="card-body bg-primary d-flex align-items-center justify-content-between">
         <p class="mb-0 fs-5">{{ postProp?.commentCount }} <i class="mdi mdi-comment-outline"></i></p>
-        <p class="mb-0 fs-5"><i @click="likePost()" class="mdi mdi-heart-outline"></i>{{ foundPost?.likeCount }}
+        <p v-if="account?.id == postProp.id" class="mb-0 fs-5"><i @click="likePost()"
+            class="mdi mdi-heart-outline"></i>{{
+              foundPost?.likeCount }}
+        </p>
+        <p v-if="account?.id != postProp.id" class="mb-0 fs-5"><i class="mdi mdi-heart"></i>{{
+          foundPost?.likeCount }}
+
         </p>
       </div>
     </div>
