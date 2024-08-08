@@ -55,13 +55,14 @@ async function likePost() {
               {{ postProp.creator.name }}
             </p>
           </div>
-          <div class="d-flex justify-content-center">
-            <h5 class="card-title">{{ postProp.body }}</h5>
+          <div class=" d-flex justify-content-center">
+            <p class="card-title mx-3">{{ postProp.body }}</p>
           </div>
         </div>
       </div>
       <div @click="setActiveProject()" data-bs-toggle="modal" data-bs-target="#postFocusModal">
-        <img :src="postProp.imgUrl" class="post-img img-fluid" :alt="`An image of an event with the type of`">
+        <img :src="postProp.imgUrl || postProp.file" class="post-img img-fluid"
+          :alt="`An image of an event with the type of`">
       </div>
       <div class="card-body bg-primary d-flex align-items-center justify-content-between">
         <p class="mb-0 fs-5">{{ postProp?.commentCount }} <i class="mdi mdi-comment-outline"></i></p>

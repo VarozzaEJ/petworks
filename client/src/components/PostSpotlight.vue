@@ -83,7 +83,7 @@ async function likePost() {
 <template>
     <div class="modal fade" id="postFocusModal" tabindex="-1" :aria-labelledby="`SpotlightPostLabel`"
         aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen modal-lg">
+        <div class="modal-dialog modal-fullscreen ">
             <div class="modal-content">
                 <!-- <div class="modal-header">
                     <h1 class="modal-title fs-5" id=""></h1>
@@ -102,13 +102,13 @@ async function likePost() {
                                         </p>
                                     </div>
                                     <div class="d-flex justify-content-center">
-                                        <h5 class="card-title">{{ post.body }}</h5>
+                                        <p class="card-title ms-3">{{ post.body }}</p>
                                     </div>
                                 </div>
                             </div>
                             <div data-bs-toggle="modal" data-bs-target="#postFocusModal">
 
-                                <img :src="post.imgUrl" class="card-img-top"
+                                <img :src="post.imgUrl || post.file" class="card-img-top"
                                     :alt="`An image of an event with the type of`">
                             </div>
                             <div class="card-body bg-primary d-flex align-items-center justify-content-between">
@@ -118,12 +118,12 @@ async function likePost() {
                                 </p>
                             </div>
                             <form @submit.prevent="createComment()">
-                                <div class="mb-3">
+                                <div class="mb-3 mx-3">
                                     <label for="comment" class="form-label"></label>
                                     <textarea v-model="commentData.body" placeholder="Tell the people..."
                                         class="form-control" id="comment" rows="3" name="comment"></textarea>
                                 </div>
-                                <div class="d-flex mb-2 justify-content-end">
+                                <div class="d-flex mb-2 me-3 justify-content-end">
                                     <button role="button" title="create comment" type="submit"
                                         class="btn btn-secondary text-end">Submit</button>
                                 </div>

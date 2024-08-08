@@ -6,6 +6,7 @@ export class Post {
         this.id = data.id || data._id
         this.body = data.body
         this.creatorId = data.creatorId
+        this.file = data.file
         this.imgUrl = data.imgUrl
         this.petTags = data.petTags
         this.creator = data.creator ? new Account(data.creator) : null

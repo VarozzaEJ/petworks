@@ -4,26 +4,18 @@ import { Account } from "../models/Account";
 import { postsService } from "../services/PostsService";
 import Pop from "../utils/Pop";
 import { Modal } from "bootstrap";
+import { logger } from "../utils/Logger.js";
 defineProps({
   account: Account
 })
 
 const editablePostData = ref({
   body: '',
-  imgUrl: '',
-  petTags: []
+  file: null,
+  previewUrl: '',
+  // petTags: []
 })
 
-async function createPost() {
-  try {
-    await postsService.createPost(editablePostData.value)
-    Modal.getOrCreateInstance('#newPostForm').hide()
-    resetForm()
-  }
-  catch (error) {
-    Pop.error('Could not make Post');
-  }
-}
 
 function selectPet(petId) {
   let petTags = editablePostData.value.petTags
@@ -37,10 +29,42 @@ function selectPet(petId) {
 function resetForm() {
   editablePostData.value = {
     body: '',
-    imgUrl: '',
-    petTags: []
+    file: null,
+    previewUrl: '',
+    // petTags: []
   }
 }
+
+async function createPost() {
+  try {
+    logger.log(editablePostData.value.file)
+    const fileUrl = await postsService.getFileUrl(editablePostData.value.file)
+    editablePostData.value.file = fileUrl
+    logger.log(editablePostData.value)
+    await postsService.createPost(editablePostData.value)
+    Modal.getOrCreateInstance('#newPostForm').hide()
+    resetForm()
+  }
+  catch (error) {
+    Pop.error('Could not make Post',);
+    logger.log(error)
+  }
+}
+
+
+async function selectFile(event) {
+  try {
+    const file = event.target.files[0]
+    logger.log(file)
+    editablePostData.value.file = file
+    editablePostData.value.previewUrl = URL.createObjectURL(file)
+  }
+  catch (error) {
+    Pop.error("Could not select file");
+    logger.error(error)
+  }
+}
+
 </script>
 
 
@@ -49,20 +73,36 @@ function resetForm() {
     <div class="col-8 mb-3">
       <label class="form-label">Image Preview</label>
       <div class="d-flex justify-content-center">
-        <div v-if="!editablePostData.imgUrl"
+        <div v-if="!editablePostData.previewUrl"
           class="bg-subtle rounded img-preview d-flex justify-content-center align-items-center">
           <i class="mdi mdi-image display-1"></i>
         </div>
         <div v-else>
-          <img class="rounded" :src="editablePostData.imgUrl" :alt="`${editablePostData.imgUrl}`">
+          <img class="rounded preview-img" :src="editablePostData.previewUrl" :alt="`${editablePostData.previewUrl}`">
         </div>
       </div>
     </div>
     <div class="col-12">
-      <div class="mb-3">
-        <label for="imgUrl" class="form-label">Image URL</label>
-        <input v-model="editablePostData.imgUrl" type="text" class="form-control" id="imgUrl" maxlength="1000">
+      <!-- <form @submit.prevent="uploadFile()"> -->
+      <div class="row">
+        <div class="col-12">
+
+          <!-- <div class="mb-3">
+            <label for="imgUrl" class="form-label">Image File</label>
+            <input v-model="editablePostData.imgUrl" name="imgUrl" type="text" class="form-control" id="imgUrl"
+              maxlength="1000">
+          </div> -->
+          <div class="mb-3">
+            <label for="imgUrl" class="form-label">Image File</label>
+            <input @change="selectFile" name="file" type="file" multiple="false" accept="image/*" class="form-control"
+              id="imgUrl" maxlength="1000">
+          </div>
+        </div>
+        <div class="col-3 d-flex align-items-center">
+
+        </div>
       </div>
+      <!-- </form> -->
     </div>
     <div class="col-12 mb-3">
       <label for="body">Make a Post!</label>
@@ -73,10 +113,10 @@ function resetForm() {
     </select> -->
     <section class="row">
       <div class="col-12">Tag Your Pets</div>
-      <div v-for="pet in account.pets" :key="`pet-tag-${pet.id}`" class="col-3">
+      <!-- <div v-for="pet in account.pets" :key="`pet-tag-${pet.id}`" class="col-3">
         <img @click="selectPet(pet.id)" class="pet-tag selectable text-success"
           :class="{ 'selected': editablePostData.petTags.includes(pet.id) }" :src="pet.imgUrl" alt="">
-      </div>
+      </div> -->
     </section>
 
     <div class="d-grid">
@@ -114,5 +154,10 @@ textarea {
   &::after {
     background-color: rgba(0, 128, 0, 0.432);
   }
+}
+
+.preview-img {
+  width: 200px;
+  height: 200px;
 }
 </style>

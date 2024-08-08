@@ -6,6 +6,7 @@ export const PostSchema = new Schema(
     petTags: { type: Schema.ObjectId, },
     body: { type: String, minLength: 1, maxLength: 300, required: true },
     imgUrl: { type: String, minLength: 1, maxLength: 1000 },
+    file: { type: String, minLength: 1, maxLength: 1000 },
   }, { timestamps: true, toJSON: { virtuals: true } })
 
 
