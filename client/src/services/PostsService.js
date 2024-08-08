@@ -7,12 +7,12 @@ import { api } from "./AxiosService.js"
 
 
 class PostsService {
+
   async likePost(postId) {
     const response = await api.post('api/likes', postId)
     const newProfile = new PostLikerProfile(response.data)
     AppState.postLikeProfiles.push(newProfile)
     const foundPost = AppState.posts.find((post) => post.id == postId.postId)
-
     foundPost.likeCount += 1
   }
 
