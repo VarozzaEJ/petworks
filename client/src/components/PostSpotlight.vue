@@ -152,15 +152,13 @@ async function likePost() {
 
                     </div>
                 </div>
-                <div class="bg-primary modal-footer">
 
-                </div>
-                <footer class="bg-primary">
-                    <!-- <button class="fab btn shadow btn-secondary justify-content-end" title="New Comment">
+            </div>
+            <footer class="bg-primary">
+                <!-- <button class="fab btn shadow btn-secondary justify-content-end" title="New Comment">
                         <i class="mdi mdi-pen fs-1"></i>
                     </button> -->
-                </footer>
-            </div>
+            </footer>
         </div>
     </div>
 </template>

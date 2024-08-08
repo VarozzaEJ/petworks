@@ -23,6 +23,14 @@ async function getActivePetsDetails() {
     logger.error(error)
   }
 }
+
+async function getPetPosts() {
+  try {
+    await petsService.getPetPosts(route.params.petId)
+  } catch (error) {
+    Pop.error(error);
+  }
+}
 </script>
 
 

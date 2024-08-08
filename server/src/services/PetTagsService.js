@@ -11,7 +11,7 @@ class PetTagsService {
 
 
   async getPetTagsByPetId(petId) {
-    const petPosts = await dbContext.PetTags.find({ petId }).populate({ path: 'post', populate: { path: 'likeCount commentCount' } })
+    const petPosts = await dbContext.PetTags.find({ petId }).populate({ path: 'posts', populate: { path: 'likeCount commentCount' } })
     return petPosts
   }
 }
