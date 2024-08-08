@@ -17,6 +17,7 @@ export class PetTagsController extends BaseController {
       const petTagData = request.body
       petTagData.creatorId = user.id
       const petTag = await petTagsService.createPetTag(petTagData)
+      response.send(petTag)
     } catch (error) {
       next(error)
     }
