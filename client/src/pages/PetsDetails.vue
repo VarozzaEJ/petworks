@@ -90,7 +90,7 @@ async function getPetPosts() {
             </div>
           </div>
         </div>
-        <div class=" pt-3 d-flex justify-content-center">
+        <div class="pt-3 d-flex justify-content-center">
           <p class="fs-5">{{ activePet.bio }}</p>
         </div>
       </div>
