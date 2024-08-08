@@ -11,7 +11,7 @@ export class PetTag {
 
 export class PetPost extends PetTag {
   constructor(data) {
-    super()
+    super(data)
     this.post = new Post(data.post)
   }
 }
