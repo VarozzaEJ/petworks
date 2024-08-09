@@ -110,7 +110,8 @@ async function selectFile(event) {
     </div>
     <div class="col-12 mb-3">
       <label for="body">Make a Post!</label>
-      <textarea v-model="editablePostData.body" class="form-control" id="body" maxlength="300" required></textarea>
+      <textarea v-model="editablePostData.body" class="form-control" id="body" minlength="15" maxlength="300"
+        required></textarea>
     </div>
     <!-- <select v-model="editablePostData.petTags" class="form-select" multiple>
       <option v-for="pet in account?.pets" :key="pet.id" :value="pet.id">{{ pet.name }}</option>
@@ -119,7 +120,7 @@ async function selectFile(event) {
       <div class="col-12 mb-1">Tag Your Pets</div>
       <div v-for="pet in account.pets" :key="`pet-tag-${pet.id}`" class="col-3 mb-3">
         <img @click="selectPet(pet.id)" class="pet-tag selectable text-success"
-          :class="{ 'selected': editablePostData.petTags.includes(pet.id) }" :src="pet.imgUrl" alt="">
+          :class="{ 'selected': editablePostData.petTags.includes(pet.id) }" :src="pet.imgUrl" :alt="pet.name">
       </div>
     </section>
     <div class="d-grid">
