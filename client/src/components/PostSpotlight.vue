@@ -8,6 +8,7 @@ import Pop from '../utils/Pop.js';
 import { commentsService } from '../services/CommentsService.js';
 import { logger } from '../utils/Logger.js';
 import { useRoute, useRouter } from 'vue-router';
+import { petTagsService } from "../services/PetTagsService";
 
 // defineProps({ postProp: { type: Post, required: true } })
 const post = computed(() => AppState.activePost)
@@ -15,12 +16,14 @@ const comments = computed(() => AppState.activePostComments)
 const foundPost = computed(() => AppState.posts.find(postData => postData.id == post.value.id)) //NOTE more than likely the wrong thing to find the specific post
 const route = useRoute()
 const router = useRouter()
+const taggedPets = computed(() => AppState.activePostTaggedPets)
+
 
 watch(() => AppState.activePost, () => {
     try {
-
         const postId = AppState.activePost.id
         commentsService.getCommentsByPostId(postId)
+        getTaggedPets()
         // logger.log('ROUTE.QUERY.POSTID', postId)
         // route.query = post.value.id
     } catch (error) {
@@ -34,6 +37,16 @@ const commentData = ref({
     body: '',
     postId: route.query.postId
 })
+
+async function getTaggedPets() {
+    try {
+        return await petTagsService.getTaggedPets(AppState.activePost.id)
+    }
+    catch (error) {
+        Pop.error("Could not get tagged pets");
+        logger.error(error)
+    }
+}
 
 async function createComment() {
     try {
@@ -110,6 +123,9 @@ async function likePost() {
 
                                 <img :src="post.imgUrl || post.file" class="card-img-top"
                                     :alt="`An image of an event with the type of`">
+                            </div>
+                            <div class="card-body">
+                                <p v-for="taggedPet in taggedPets" :key="taggedPet.id">{{ taggedPet.pet.name }}</p>
                             </div>
                             <div class="card-body bg-primary d-flex align-items-center justify-content-between">
                                 <p class="mb-0 fs-5">{{ comments.length }} <i class="mdi mdi-comment-outline"></i></p>

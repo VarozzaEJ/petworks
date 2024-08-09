@@ -1,9 +1,14 @@
 import { AppState } from "../AppState"
-import { PetPost } from "../models/PetTag"
+import { PetPost, TaggedPet } from "../models/PetTag"
 import { logger } from "../utils/Logger"
 import { api } from "./AxiosService"
 
 class PetTagsService {
+  async getTaggedPets(postId) {
+    const response = await api.get(`api/posts/${postId}/petTags`)
+    const taggedPets = response.data.map((petTag) => new TaggedPet(petTag))
+    AppState.activePostTaggedPets = taggedPets
+  }
   async createPetTags(petTags) {
     const response = await api.post('api/petTags', petTags)
     logger.log(response.data);

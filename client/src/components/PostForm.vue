@@ -42,8 +42,11 @@ async function createPost() {
     const fileUrl = await postsService.getFileUrl(editablePostData.value.file)
     editablePostData.value.file = fileUrl
     logger.log(editablePostData.value)
-    await postsService.createPost(editablePostData.value)
-    await petTagsService.createPetTags(editablePostData.value.petTags)
+    const post = await postsService.createPost(editablePostData.value)
+    const petTagsData = editablePostData.value.petTags.map((petId) => {
+      return { petId, postId: post.id }
+    })
+    await petTagsService.createPetTags(petTagsData)
     Modal.getOrCreateInstance('#newPostForm').hide()
     Pop.success("Created Post")
     resetForm()

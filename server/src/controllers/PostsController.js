@@ -3,6 +3,7 @@ import BaseController from "../utils/BaseController.js";
 import { postsService } from "../services/PostsService.js";
 import { logger } from "../utils/Logger.js";
 import { commentsService } from "../services/CommentsService.js";
+import { petTagsService } from "../services/PetTagsService.js";
 
 
 export class PostsController extends BaseController {
@@ -11,6 +12,7 @@ export class PostsController extends BaseController {
     this.router
       .get('', this.getAllPosts)
       .get('/:postId/comments', this.getCommentsByPostId)
+      .get('/:postId/petTags', this.getPetTagsByPostId)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createPost)
 
@@ -53,6 +55,16 @@ export class PostsController extends BaseController {
       const postId = request.params.postId
       const comments = await commentsService.getCommentsByPostId(postId)
       response.send(comments)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async getPetTagsByPostId(request, response, next) {
+    try {
+      const postId = request.params.postId
+      const taggedPets = await petTagsService.getPetTagsByPostId(postId)
+      response.send(taggedPets)
     } catch (error) {
       next(error)
     }

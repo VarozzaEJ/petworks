@@ -14,6 +14,11 @@ class PetTagsService {
     const petPosts = await dbContext.PetTags.find({ petId }).populate({ path: 'post', populate: { path: 'creator likes commentCount' } })
     return petPosts
   }
+
+  async getPetTagsByPostId(postId) {
+    const taggedPets = await dbContext.PetTags.find({ postId }).populate({ path: 'pet', populate: { path: 'owner' } })
+    return taggedPets
+  }
 }
 
 export const petTagsService = new PetTagsService
