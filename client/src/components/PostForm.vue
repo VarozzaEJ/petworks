@@ -49,6 +49,7 @@ async function createPost() {
     await petTagsService.createPetTags(petTagsData)
     Modal.getOrCreateInstance('#newPostForm').hide()
     Pop.success("Created Post")
+    await postsService.getAllPosts()
     resetForm()
   }
   catch (error) {
