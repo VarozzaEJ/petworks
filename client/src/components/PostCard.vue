@@ -14,7 +14,8 @@ const props = defineProps({
 })
 
 const router = useRouter()
-const foundPost = computed(() => AppState.posts.find(postData => postData.id == props.postProp.id)) //NOTE more than likely the wrong thing to find the specific post
+const foundPost = computed(() => AppState.posts.find(postData => postData.id == props.postProp.id))
+//NOTE more than likely the wrong thing to find the specific post
 const account = computed(() => AppState.account)
 
 async function setActiveProject() {

@@ -1,5 +1,5 @@
 import { AppState } from "../AppState.js"
-import { Like, PostLikerProfile } from "../models/Like.js"
+import { Like } from "../models/Like.js"
 import { Post } from "../models/Post.js"
 import { Profile } from "../models/Profile.js"
 import { logger } from "../utils/Logger.js"
@@ -19,13 +19,11 @@ class PostsService {
     const foundPost = AppState.posts.find((post) => post.id == postId.postId)
     foundPost.likes.push(newLike)
   }
-
   setActiveProject(postProp) {
     AppState.activePost = postProp
   }
   async getAllPosts() {
     // AppState.posts = null
-
     const response = await api.get('api/posts')
     logger.log('GOT POSTS', response.data)
     const posts = await response.data.map(postPOJO => new Post(postPOJO))
@@ -50,9 +48,6 @@ class PostsService {
     AppState.posts.unshift(newPost)
     return newPost
   }
-
 }
-
-
 
 export const postsService = new PostsService()

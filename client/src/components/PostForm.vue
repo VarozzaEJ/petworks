@@ -5,6 +5,7 @@ import { postsService } from "../services/PostsService";
 import Pop from "../utils/Pop";
 import { Modal } from "bootstrap";
 import { logger } from "../utils/Logger.js";
+import { petTagsService } from "../services/PetTagsService";
 defineProps({
   account: Account
 })
@@ -42,6 +43,7 @@ async function createPost() {
     editablePostData.value.file = fileUrl
     logger.log(editablePostData.value)
     await postsService.createPost(editablePostData.value)
+    await petTagsService.createPetTags(editablePostData.value.petTags)
     Modal.getOrCreateInstance('#newPostForm').hide()
     Pop.success("Created Post")
     resetForm()
@@ -87,7 +89,6 @@ async function selectFile(event) {
       <!-- <form @submit.prevent="uploadFile()"> -->
       <div class="row">
         <div class="col-12">
-
           <!-- <div class="mb-3">
             <label for="imgUrl" class="form-label">Image File</label>
             <input v-model="editablePostData.imgUrl" name="imgUrl" type="text" class="form-control" id="imgUrl"
@@ -100,7 +101,6 @@ async function selectFile(event) {
           </div>
         </div>
         <div class="col-3 d-flex align-items-center">
-
         </div>
       </div>
       <!-- </form> -->
@@ -119,12 +119,10 @@ async function selectFile(event) {
           :class="{ 'selected': editablePostData.petTags.includes(pet.id) }" :src="pet.imgUrl" alt="">
       </div>
     </section>
-
     <div class="d-grid">
       <button type="submit" class="btn btn-danger fw-bold">Make Post</button>
     </div>
   </form>
-
 </template>
 
 

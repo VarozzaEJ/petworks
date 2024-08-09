@@ -1,8 +1,14 @@
 import { AppState } from "../AppState"
 import { PetPost } from "../models/PetTag"
+import { logger } from "../utils/Logger"
 import { api } from "./AxiosService"
 
 class PetTagsService {
+  async createPetTags(petTags) {
+    const response = await api.post('api/petTags', petTags)
+    logger.log(response.data);
+
+  }
 
   async getPetPosts(petId) {
     AppState.petPosts = []
