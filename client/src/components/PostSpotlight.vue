@@ -109,7 +109,6 @@ async function likePost() {
                                 <div class="">
                                     <div class="d-flex align-items-center">
                                         <img :src="post.creator.picture" class="account-img m-2" alt="">
-
                                         <p class="mb-0 text-dark fs-5">
                                             {{ post.creator.name }}
                                         </p>
@@ -120,12 +119,12 @@ async function likePost() {
                                 </div>
                             </div>
                             <div data-bs-toggle="modal" data-bs-target="#postFocusModal">
-
                                 <img :src="post.imgUrl || post.file" class="card-img-top"
                                     :alt="`An image of an event with the type of`">
                             </div>
                             <div class="card-body">
-                                <p v-for="taggedPet in taggedPets" :key="taggedPet.id">{{ taggedPet.pet.name }}</p>
+                                <p v-for="taggedPet in taggedPets" :key="taggedPet.id" class="pet-tag">{{
+                                    taggedPet.pet.name }}</p>
                             </div>
                             <div class="card-body bg-primary d-flex align-items-center justify-content-between">
                                 <p class="mb-0 fs-5">{{ comments.length }} <i class="mdi mdi-comment-outline"></i></p>
@@ -153,22 +152,16 @@ async function likePost() {
                                             <p class="fs-2 mb-0 ms-2">{{ comment.creator.name }}</p>
                                         </div>
                                         <button v-if="comment.creatorId == AppState.account.id"
-                                            class="text-end btn me-3 btn-secondary"
-                                            @click="deleteComment(comment.id)"><i
-                                                class="mdi mdi-delete-forever"></i></button>
+                                            class="text-end btn me-3 btn-secondary" @click="deleteComment(comment.id)">
+                                            <i class="mdi mdi-delete-forever"></i>
+                                        </button>
                                     </span>
                                     <p class="fs-5 ms-3 fw-bold text-dark">{{ comment.body }}</p>
-
                                 </div>
                             </div>
                         </div>
-
-
-
-
                     </div>
                 </div>
-
             </div>
             <footer class="bg-primary">
                 <!-- <button class="fab btn shadow btn-secondary justify-content-end" title="New Comment">
@@ -207,4 +200,6 @@ async function likePost() {
     object-fit: cover;
     object-position: center;
 }
+
+.pet-tag {}
 </style>
