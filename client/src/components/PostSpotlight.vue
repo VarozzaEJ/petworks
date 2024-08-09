@@ -122,9 +122,14 @@ async function likePost() {
                                 <img :src="post.imgUrl || post.file" class="card-img-top"
                                     :alt="`An image of an event with the type of`">
                             </div>
-                            <div class="card-body">
-                                <p v-for="taggedPet in taggedPets" :key="taggedPet.id" class="pet-tag">{{
-                                    taggedPet.pet.name }}</p>
+                            <div class="card-body row">
+                                <div class="col-4">
+                                    <div class="row">
+
+                                    </div>
+                                    <p v-for="taggedPet in taggedPets" :key="taggedPet.id" class="pet-tag col mb-0">{{
+                                        taggedPet.pet.name }}</p>
+                                </div>
                             </div>
                             <div class="card-body bg-primary d-flex align-items-center justify-content-between">
                                 <p class="mb-0 fs-5">{{ comments.length }} <i class="mdi mdi-comment-outline"></i></p>
