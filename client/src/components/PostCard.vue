@@ -7,6 +7,10 @@ import { computed } from 'vue';
 import { AppState } from '../AppState.js';
 import Pop from '../utils/Pop.js';
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 30c634a (empty comite)
 
 
 const props = defineProps({
