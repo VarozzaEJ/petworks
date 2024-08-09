@@ -72,13 +72,13 @@ async function deletePost(postsId) {
             <p class="mb-0 text-dark fs-5">
               {{ postProp.creator.name }}
             </p>
-            <div class="dropdown m-3 flex-grow-1 d-flex justify-content-end">
+            <div v-if="account?.id == postProp.creator.id" class="dropdown m-3 flex-grow-1 d-flex justify-content-end">
               <p href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 ...
               </p>
               <div class="dropdown-menu bg-danger">
                 <div class="bg-danger d-flex justify-content-center">
-                  <button @click="deletePost()" class="btn btn-danger"><i
+                  <button @click="deletePost(postProp.id)" class="btn btn-danger"><i
                       class="mdi mdi-delete-forever">Delete</i></button>
                 </div>
               </div>
