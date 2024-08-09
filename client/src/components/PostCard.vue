@@ -40,6 +40,22 @@ async function unlikePost() {
   logger.log(likeId)
   // await postsService.unlikePost(postId)
 }
+
+async function deletePost(postsId) {
+  try {
+    const choice = await Pop.confirm("are you sure?", 'delete post')
+    if (choice == false) {
+      Pop.toast("Say goodbye to your post", 'info', 'center')
+      return
+    }
+    await postsService.deletePost(postsId)
+    Pop.success("Post Deleted!")
+  }
+  catch (error) {
+    logger.error(error)
+  }
+}
+
 </script>
 
 
@@ -49,19 +65,33 @@ async function unlikePost() {
     <div class="card bg-primary shadow" style="width: 100dvh;">
       <div class="card-title bg-primary">
         <div class="">
-          <div class="d-flex align-items-center">
+          <div class="d-flex align-items-center d-col ">
             <router-link :to="{ name: 'Profile', params: { profileId: postProp.creatorId } }">
               <img :src="postProp.creator.picture" class="account-img m-2" alt="">
             </router-link>
             <p class="mb-0 text-dark fs-5">
               {{ postProp.creator.name }}
             </p>
+            <div class="dropdown m-3 flex-grow-1 d-flex justify-content-end">
+              <p href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                ...
+              </p>
+              <div class="dropdown-menu bg-danger">
+                <div class="bg-danger d-flex justify-content-center">
+                  <button @click="deletePost()" class="btn btn-danger"><i
+                      class="mdi mdi-delete-forever">Delete</i></button>
+                </div>
+              </div>
+            </div>
           </div>
+
+
           <div class=" d-flex justify-content-center">
             <p class="card-title mx-3">{{ postProp.body }}</p>
           </div>
         </div>
       </div>
+
       <div @click="setActiveProject()" data-bs-toggle="modal" data-bs-target="#postFocusModal">
         <img :src="postProp.imgUrl || postProp.file" class="post-img img-fluid"
           :alt="`An image of an event with the type of`">
@@ -75,6 +105,9 @@ async function unlikePost() {
         <p v-else class="mb-0 fs-5"><i @click="unlikePost()" class="mdi mdi-heart"></i>{{
           foundPost?.likes.length }}
         </p>
+
+
+
       </div>
     </div>
   </div>

@@ -52,6 +52,13 @@ class PostsService {
     AppState.posts.unshift(newPost)
     return newPost
   }
+
+  async deletePost(postsId) {
+    const response = await api.delete(`api/posts/${postsId}`)
+    logger.log(response.data)
+    const postToRemove = AppState.activeProfilePosts.findIndex(ptd => ptd.id === postsId)
+    AppState.activeProfilePosts.splice(postToRemove, 1)
+  }
 }
 
 export const postsService = new PostsService()
