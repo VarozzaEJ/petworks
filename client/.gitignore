@@ -20,3 +20,6 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+
+petworksEC2Instance.pem
+privatePetworksEC2Instance.pem
