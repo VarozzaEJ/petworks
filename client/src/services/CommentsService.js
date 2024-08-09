@@ -9,10 +9,12 @@ class CommentsService {
         const commentToDelete = await api.delete(`api/comments/${commentId}`)
         return commentToDelete
     }
-    async createComment(commentData) {
+    async createComment(commentData, postId) {
         const response = await api.post(`api/comments`, commentData)
         const comment = await new Comment(response.data)
         AppState.activePostComments.unshift(comment)
+        const foundPost = AppState.posts.find(post => post.id == postId)
+        foundPost.commentCount++
     }
     async getCommentsByPostId(postId) {
         AppState.activePostComments = []

@@ -56,8 +56,8 @@ class PostsService {
   async deletePost(postsId) {
     const response = await api.delete(`api/posts/${postsId}`)
     logger.log(response.data)
-    const postToRemove = AppState.activeProfilePosts.findIndex(ptd => ptd.id === postsId)
-    AppState.activeProfilePosts.splice(postToRemove, 1)
+    const postToRemove = AppState.posts.findIndex(ptd => ptd.id === postsId)
+    AppState.posts.splice(postToRemove, 1)
   }
 }
 

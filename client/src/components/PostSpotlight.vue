@@ -51,7 +51,7 @@ async function getTaggedPets() {
 async function createComment() {
     try {
         commentData.value.postId = route.query.postId
-        await commentsService.createComment(commentData.value)
+        await commentsService.createComment(commentData.value, post.value.id)
         Pop.success(`Successfully created comment`)
         resetForm()
         //TODO reset form on submit once comments are finished
