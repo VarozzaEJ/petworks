@@ -67,14 +67,14 @@ onMounted(() => {
 
 async function createPet() {
   try {
-    logger.log('🦎🦎🦎🦎🦎🦎🦎', petData.value)
     const fileUrl = await petsService.getFileUrl(petData.value.file)
     petData.value.file = fileUrl
+    logger.log('🦎🦎🦎🦎🦎🦎🦎', petData.value)
     const newPet = await petsService.createPet(petData.value)
-    Pop.success(`Pet Created!`)
-    resetFrom()
-    Modal.getOrCreateInstance('#exampleModal').hide()
-    router.push({ name: 'Pets', params: { petId: newPet.id } })
+    // Pop.success(`Pet Created!`)
+    // resetFrom()
+    // Modal.getOrCreateInstance('#exampleModal').hide()
+    // router.push({ name: 'Pets', params: { petId: newPet.id } })
   } catch (error) {
     Pop.toast('Error creating pet', 'error', 'center-start')
     logger.error(error)

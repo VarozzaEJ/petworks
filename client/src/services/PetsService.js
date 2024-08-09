@@ -31,9 +31,9 @@ class PetsService {
   async createPet(petData) {
     const response = await api.post('api/pets', petData)
     logger.log('🐕', response.data)
-    const newPet = new Pet(response.data)
-    AppState.pets.unshift(newPet)
-    return newPet
+    // const newPet = new Pet(response.data)
+    // AppState.pets.unshift(newPet)
+    // return newPet
   }
   async getPetOfTheDay() {
     AppState.petOfTheDay = null

@@ -43,7 +43,9 @@ async function getPetPosts() {
       <img class="img-fluid pet-img" :src="activePet.imgUrl || activePet.file" alt="">
     </div>
     <div class="container pt-4 bg-primary d-flex flex-column align-items-center ">
-      <p class="text-capitalize fs-1 fw-bold">{{ activePet.name }}</p>
+      <p class="text-capitalize fs-1 fw-bold">{{ activePet.name }} - <span class="fs-3"><i class="mdi mdi-calendar"></i>
+          {{
+            activePet.birthday.toLocaleDateString() }}</span> </p>
       <p class="fs-2 text-capitalize fw-bold">Species: {{ activePet.species }}</p>
 
 
@@ -97,7 +99,7 @@ async function getPetPosts() {
       </div>
 
       <div class=" pt-3 d-flex justify-content-center">
-        <p class="fs-5">{{ activePet.bio }}</p>
+        <p class="fs-5"><i class="mdi mdi-file-outline me-1"></i>{{ activePet.bio }}</p>
       </div>
     </div>
 

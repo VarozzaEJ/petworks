@@ -6,7 +6,7 @@ export const PetSchema = new Schema({
     name: { type: String, minlength: 1, maxlength: 50, required: true },
     bio: { type: String, minlength: 15, maxlength: 500 },
     imgUrl: { type: String, minlength: 1, maxlength: 1000, },
-    file: { type: String, minlength: 1, maxlength: 1000, required: true },
+    file: { type: String, minlength: 1, maxlength: 1000 },
     species: { type: String, minlength: 1, maxlength: 50 },
     breed: { type: String, minlength: 1, maxlength: 50 },
     petStats: { type: Object }, //NOTE may need to define that this is an array
