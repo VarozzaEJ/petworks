@@ -15,6 +15,7 @@ export class LikesController extends BaseController {
     try {
       const user = request.userInfo
       const likeData = request.body
+      // logger.log(likeData)
       likeData.accountId = user.id
       const newTicket = await likesService.likePost(likeData)
       response.send(newTicket)

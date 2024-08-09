@@ -5,6 +5,13 @@ import { api } from "./AxiosService.js"
 
 
 class PetsService {
+  async getFileUrl(file) {
+    const payload = new FormData()
+    payload.append('image', file)
+    logger.log('🎆', payload)
+    const response = await api.post('api/upload', payload)
+    return response.data
+  }
 
   async getActiveProfilePets(profileId) {
     AppState.activeProfilePets = null

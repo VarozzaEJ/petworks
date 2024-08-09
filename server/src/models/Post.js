@@ -4,9 +4,11 @@ export const PostSchema = new Schema(
   {
     creatorId: { type: Schema.ObjectId, required: true },
     petTags: { type: Schema.ObjectId, },
+
     body: { type: String, minLength: 1, maxLength: 300, required: true },
     imgUrl: { type: String, minLength: 1, maxLength: 1000 },
     file: { type: String, minLength: 1, maxLength: 1000 },
+    isLiked: { type: Boolean, required: true }
   }, { timestamps: true, toJSON: { virtuals: true } })
 
 

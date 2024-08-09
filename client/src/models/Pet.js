@@ -7,6 +7,7 @@ export class Pet {
         this.ownerId = data.ownerId
         this.bio = data.bio
         this.imgUrl = data.imgUrl
+        this.file = data.file
         this.species = data.species
         this.breed = data.breed
         this.petStats = data.petStats
