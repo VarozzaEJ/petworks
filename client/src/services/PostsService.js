@@ -7,6 +7,10 @@ import { api } from "./AxiosService.js"
 
 
 class PostsService {
+  async unlikePost(likeId) {
+    const likeToDelete = await api.delete(`api/comments/${likeId}`)
+    return likeToDelete
+  }
   async getFileUrl(file) {
     const payload = new FormData()
     payload.append('image', file)

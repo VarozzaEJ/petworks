@@ -7,10 +7,6 @@ import { computed } from 'vue';
 import { AppState } from '../AppState.js';
 import Pop from '../utils/Pop.js';
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 30c634a (empty comite)
 
 
 const props = defineProps({
@@ -37,6 +33,12 @@ async function likePost() {
     Pop.error("Could not like post", 'error');
     logger.log(error)
   }
+}
+
+async function unlikePost() {
+  const likeId = props.postProp.likes.find(like => like.accountId == account.value.id)
+  logger.log(likeId)
+  // await postsService.unlikePost(postId)
 }
 </script>
 
@@ -70,7 +72,7 @@ async function likePost() {
             @click="likePost()" class="mdi mdi-heart-outline"></i>{{
               foundPost?.likes.length }}
         </p>
-        <p v-else class="mb-0 fs-5"><i class="mdi mdi-heart"></i>{{
+        <p v-else class="mb-0 fs-5"><i @click="unlikePost()" class="mdi mdi-heart"></i>{{
           foundPost?.likes.length }}
         </p>
       </div>
