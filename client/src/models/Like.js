@@ -19,7 +19,7 @@ export class PostLikerProfile extends Like {
     }
 }
 
-export class EventGoerEvent extends Like {
+export class LikedPost extends Like {
     constructor(data) {
         super(data)
         this.post = new Post(data.post)

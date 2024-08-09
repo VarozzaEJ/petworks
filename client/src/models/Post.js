@@ -1,4 +1,5 @@
 import { Account } from "./Account.js"
+import { Like } from "./Like.js"
 
 
 export class Post {
@@ -14,7 +15,8 @@ export class Post {
     this.createdAt = data.createdAt
     this.updatedAt = data.updatedAt
     this.pet = data.pet
-    this.isLike = data.isLike || false
+    /**@type {Like[]} */
+    this.likes = data.likes
     this.commentCount = data.commentCount
   }
 }

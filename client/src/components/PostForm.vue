@@ -13,7 +13,7 @@ const editablePostData = ref({
   body: '',
   file: null,
   previewUrl: '',
-  // petTags: []
+  petTags: []
 })
 
 
@@ -31,7 +31,7 @@ function resetForm() {
     body: '',
     file: null,
     previewUrl: '',
-    // petTags: []
+    petTags: []
   }
 }
 
@@ -113,11 +113,11 @@ async function selectFile(event) {
       <option v-for="pet in account?.pets" :key="pet.id" :value="pet.id">{{ pet.name }}</option>
     </select> -->
     <section class="row">
-      <div class="col-12">Tag Your Pets</div>
-      <!-- <div v-for="pet in account.pets" :key="`pet-tag-${pet.id}`" class="col-3">
+      <div class="col-12 mb-1">Tag Your Pets</div>
+      <div v-for="pet in account.pets" :key="`pet-tag-${pet.id}`" class="col-3 mb-3">
         <img @click="selectPet(pet.id)" class="pet-tag selectable text-success"
           :class="{ 'selected': editablePostData.petTags.includes(pet.id) }" :src="pet.imgUrl" alt="">
-      </div> -->
+      </div>
     </section>
 
     <div class="d-grid">
