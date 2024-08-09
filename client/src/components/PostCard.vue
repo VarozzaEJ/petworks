@@ -45,7 +45,6 @@ async function deletePost(postsId) {
   try {
     const choice = await Pop.confirm("are you sure?", 'delete post')
     if (choice == false) {
-      Pop.toast("Say goodbye to your post", 'info', 'center')
       return
     }
     await postsService.deletePost(postsId)
