@@ -6,7 +6,9 @@ import { logger } from '../utils/Logger.js';
 import { computed } from 'vue';
 import { AppState } from '../AppState.js';
 import Pop from '../utils/Pop.js';
+import { likesService } from '../services/LikesService.js';
 
+let isLiked = false
 
 
 const props = defineProps({
@@ -26,12 +28,42 @@ async function setActiveProject() {
 
 async function likePost() {
   try {
+
     const postId = { postId: props.postProp.id }
-    await postsService.likePost(postId)
+    const foundAccount = props.postProp.likeCount.find(likeArray => account.value.id == likeArray.accountId)
+    logger.log(foundAccount)
+    if (foundAccount) {
+      isLiked = true
+    } else {
+      isLiked = false
+    }
 
   }
+
   catch (error) {
     Pop.error("Could not like post", 'error');
+    logger.log(error)
+  }
+}
+async function createLikeRelationship() {
+  try {
+    const postId = { postId: props.postProp.id }
+    const likedPost = await likesService.createLikeRelationship(postId)
+    logger.log(likedPost)
+  }
+  catch (error) {
+    Pop.error("Error liking post");
+    logger.log(error)
+  }
+}
+
+async function deleteLikeRelationship() {
+  try {
+    const postId = props.postProp.id
+    const unlikedPost = await likesService.deleteLikeRelationship(postId)
+  }
+  catch (error) {
+    Pop.error("Error unliking post");
     logger.log(error)
   }
 }
@@ -63,12 +95,12 @@ async function likePost() {
       </div>
       <div class="card-body bg-primary d-flex align-items-center justify-content-between">
         <p class="mb-0 fs-5">{{ postProp?.commentCount }} <i class="mdi mdi-comment-outline"></i></p>
-        <p v-if="foundPost.isLike == false" class="mb-0 fs-5"><i @click="likePost()"
+        <p v-if="postProp.isLike == false" class="mb-0 fs-5"><i @click="createLikeRelationship()"
             class="mdi mdi-heart-outline"></i>{{
-              foundPost?.likeCount }}
+              foundPost?.likeCount.length }}
         </p>
         <p v-else class="mb-0 fs-5"><i class="mdi mdi-heart"></i>{{
-          foundPost?.likeCount }}
+          foundPost?.likeCount.length }}
         </p>
       </div>
     </div>

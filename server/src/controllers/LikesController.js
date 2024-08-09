@@ -1,6 +1,7 @@
 import { Auth0Provider } from "@bcwdev/auth0provider";
 import BaseController from "../utils/BaseController.js";
 import { likesService } from "../services/LikesService.js";
+import { logger } from "../utils/Logger.js";
 
 
 export class LikesController extends BaseController {
@@ -14,8 +15,9 @@ export class LikesController extends BaseController {
   async likePost(request, response, next) {
     try {
       const user = request.userInfo
+      request.body.isLike = true
       const likeData = request.body
-      // logger.log(likeData)
+      console.log(likeData)
       likeData.accountId = user.id
       const newTicket = await likesService.likePost(likeData)
       response.send(newTicket)

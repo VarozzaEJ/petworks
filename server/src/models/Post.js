@@ -8,7 +8,7 @@ export const PostSchema = new Schema(
     body: { type: String, minLength: 1, maxLength: 300, required: true },
     imgUrl: { type: String, minLength: 1, maxLength: 1000 },
     file: { type: String, minLength: 1, maxLength: 1000 },
-    isLiked: { type: Boolean, required: true }
+    isLiked: { type: Boolean, required: true, default: false }
   }, { timestamps: true, toJSON: { virtuals: true } })
 
 
@@ -37,7 +37,6 @@ PostSchema.virtual('likeCount',
     localField: '_id',
     ref: 'Like',
     foreignField: 'postId',
-    count: true,
   }
 )
 

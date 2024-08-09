@@ -13,7 +13,7 @@ class PostsService {
     const response = await api.post('api/upload', payload)
     return response.data
   }
-  async likePost(postId) {
+  async likePost(postId, isLiked) {
     const response = await api.post('api/likes', postId)
     const newProfile = new PostLikerProfile(response.data)
     AppState.postLikeProfiles.push(newProfile)
