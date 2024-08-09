@@ -1,4 +1,5 @@
 import { dbContext } from "../db/DbContext.js"
+import { Forbidden } from "../utils/Errors.js"
 
 
 class PostsService {
@@ -15,6 +16,12 @@ class PostsService {
     const profile = await dbContext.Posts.find({ creatorId: postProfileId }).populate('creator pets likes')
     //TODO turn the pets virtual into its own seperate request.
     return profile
+  }
+  async deletePost(postId, userId) {
+    const postToDestroy = await dbContext.Posts.findById(postId)
+    if (userId != postToDestroy.creatorId) throw new Forbidden("NOPE! You can not destroy what you did not create")
+    await postToDestroy.deleteOne()
+    return `whoop whoop`
   }
 
 }

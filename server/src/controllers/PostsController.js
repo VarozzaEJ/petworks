@@ -15,6 +15,7 @@ export class PostsController extends BaseController {
       .get('/:postId/petTags', this.getPetTagsByPostId)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createPost)
+      .delete('/:postId', this.deletePost)
 
   }
 
@@ -40,21 +41,22 @@ export class PostsController extends BaseController {
       next(error)
     }
   }
-  // async getPostByProfileId(request, response, next) {
-  //   try {
-  //     const postProfileId = request.params.profileId
-  //     const posts = await postsService.getPostByProfileId(postProfileId)
-  //     response.send(posts)
-  //   } catch (error) {
-  //     next(error)
-  //   }
 
-  // }
   async getCommentsByPostId(request, response, next) {
     try {
       const postId = request.params.postId
       const comments = await commentsService.getCommentsByPostId(postId)
       response.send(comments)
+    } catch (error) {
+      next(error)
+    }
+  }
+  async deletePost(request, response, next) {
+    try {
+      const user = request.userInfo
+      const postId = request.params.postId
+      const message = await postsService.deletePost(postId, user.id)
+      response.send(message)
     } catch (error) {
       next(error)
     }
