@@ -50,6 +50,7 @@ async function createPost() {
     Modal.getOrCreateInstance('#newPostForm').hide()
     Pop.success("Created Post")
     resetForm()
+    await postsService.getAllPosts()
   }
   catch (error) {
     Pop.error('Could not make Post',);
