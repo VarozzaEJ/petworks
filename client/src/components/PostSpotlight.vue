@@ -125,10 +125,13 @@ async function likePost() {
                             <div class="card-body row">
                                 <div class="col-4">
                                     <div class="row">
-
+                                        <div class="col text-center">
+                                            <p v-for="taggedPet in taggedPets" :key="taggedPet.id"
+                                                class="pet-tag bg-danger fw-semibold mb-0">
+                                                {{
+                                                    taggedPet.pet.name }}</p>
+                                        </div>
                                     </div>
-                                    <p v-for="taggedPet in taggedPets" :key="taggedPet.id" class="pet-tag col mb-0">{{
-                                        taggedPet.pet.name }}</p>
                                 </div>
                             </div>
                             <div class="card-body bg-primary d-flex align-items-center justify-content-between">
