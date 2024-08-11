@@ -27,6 +27,16 @@ const routes = [
     component: loadPage('PetsDetails')
   },
   {
+    path: '/search',
+    name: 'Search',
+    component: loadPage('SearchPage')
+  },
+  {
+    path: '/likedPosts',
+    name: 'LikedPosts',
+    component: loadPage('LikedPostsPage')
+  },
+  {
     path: '/account',
     name: 'Account',
     component: loadPage('AccountPage'),

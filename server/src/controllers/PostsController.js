@@ -11,6 +11,8 @@ export class PostsController extends BaseController {
     super('api/posts')
     this.router
       .get('', this.getAllPosts)
+      // .get('?query=:searchTerm', this.searchPosts)
+      //FIXME figure out query for searching post content on the backend.
       .get('/:postId/comments', this.getCommentsByPostId)
       .get('/:postId/petTags', this.getPetTagsByPostId)
       .use(Auth0Provider.getAuthorizedUserInfo)
@@ -67,6 +69,15 @@ export class PostsController extends BaseController {
       const postId = request.params.postId
       const taggedPets = await petTagsService.getPetTagsByPostId(postId)
       response.send(taggedPets)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async searchPosts(request, response, next) {
+    try {
+      const searchTerm = request.query.searchTerm
+      logger.log(request)
     } catch (error) {
       next(error)
     }

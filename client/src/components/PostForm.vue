@@ -53,7 +53,7 @@ async function createPost() {
     await postsService.getAllPosts()
   }
   catch (error) {
-    Pop.error('Could not make Post',);
+    Pop.error('Image too large, even after compression');
     logger.log(error)
   }
 }
@@ -121,7 +121,8 @@ async function selectFile(event) {
       <div class="col-12 mb-1">Tag Your Pets</div>
       <div v-for="pet in account.pets" :key="`pet-tag-${pet.id}`" class="col-3 mb-3">
         <img @click="selectPet(pet.id)" class="pet-tag selectable text-success"
-          :class="{ 'selected': editablePostData.petTags.includes(pet.id) }" :src="pet.imgUrl" :alt="pet.name">
+          :class="{ 'selected': editablePostData.petTags.includes(pet.id) }" :src="pet.imgUrl || pet.file"
+          :alt="pet.name">
       </div>
     </section>
     <div class="d-grid">

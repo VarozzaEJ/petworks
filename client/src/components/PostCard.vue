@@ -36,9 +36,9 @@ async function likePost() {
 }
 
 async function unlikePost() {
-  const likeId = props.postProp.likes.find(like => like.accountId == account.value.id)
-  logger.log(likeId)
-  // await postsService.unlikePost(postId)
+  const foundLike = props.postProp.likes.find(like => like.accountId == account.value.id)
+  const likeId = foundLike.id
+  await postsService.unlikePost(likeId, props.postProp.id)
 }
 
 async function deletePost(postsId) {
@@ -101,8 +101,9 @@ async function deletePost(postsId) {
             @click="likePost()" class="mdi mdi-heart-outline"></i>{{
               foundPost?.likes.length }}
         </p>
-        <p v-else class="mb-0 fs-5"><i @click="unlikePost()" class="mdi mdi-heart"></i>{{
-          foundPost?.likes.length }}
+        <p v-else-if="props.postProp.likes.find(like => like.accountId === account?.id)" class="mb-0 fs-5"><i
+            @click="unlikePost()" class="mdi text-info mdi-heart"></i>{{
+              foundPost?.likes.length }}
         </p>
 
 

@@ -8,10 +8,22 @@ export class ImageUploadController extends BaseController {
     constructor() {
         super('api/upload')
         this.router
+            // .use(fileUpload({ limits: { fileSize: 1 * 1024 * 1024 } }))
             .use(fileUpload())
             .use(Auth0Provider.getAuthorizedUserInfo)
             .post('', this.uploadImage)
+            .post('/sharp', this.uploadImageWithSharp)
 
+    }
+    async uploadImageWithSharp(request, response, next) {
+        try {
+            const file = request.files.image
+            const userId = request.userInfo.id
+            const uploadedImage = await imageUploadService.uploadImageWithSharp(file, userId)
+            response.send(uploadedImage)
+        } catch (error) {
+            next(error)
+        }
     }
 
     async uploadImage(request, response, next) {

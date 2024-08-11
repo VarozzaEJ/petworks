@@ -11,6 +11,7 @@ export class LikesController extends BaseController {
       .get('', this.getLikesByPostId)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.likePost)
+      .delete('/:likeId', this.unlikePost)
   }
 
   async likePost(request, response, next) {
@@ -22,6 +23,20 @@ export class LikesController extends BaseController {
       likeData.accountId = user.id
       const newTicket = await likesService.likePost(likeData)
       response.send(newTicket)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async unlikePost(request, response, next) {
+    try {
+      const user = request.userInfo
+      request.body.isLike = false
+      request.body.likeId = request.params.likeId
+      const likeData = request.body
+      likeData.accountId = user.id
+      const likeToDelete = await likesService.unlikePost(likeData)
+      response.send(likeToDelete)
     } catch (error) {
       next(error)
     }

@@ -9,7 +9,7 @@ class PetsService {
     const payload = new FormData()
     payload.append('image', file)
     logger.log('🎆', payload)
-    const response = await api.post('api/upload', payload)
+    const response = await api.post('api/upload/sharp', payload)
     return response.data
   }
 

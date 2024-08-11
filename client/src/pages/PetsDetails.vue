@@ -13,7 +13,12 @@ const activePet = computed(() => AppState.activePets)
 const route = useRoute()
 onMounted(() => {
   getActivePetsDetails()
-  getPetPosts()
+  // getPetPosts()
+  //TODO fix pet posts
+  //TODO comment count does not show on the profile page's posts
+  //TODO search page
+  //TODO See your liked posts page
+  //TODO can infinitely like posts on the profile page.
 })
 
 async function getActivePetsDetails() {
@@ -106,10 +111,10 @@ async function getPetPosts() {
     <div class="d-flex justify-content-center pt-3">
 
       <p class="d-inline-flex gap-1">
-
-        <button class="btn btn-subtle-outline" type="button" data-bs-toggle="collapse"
+        //TODO uncomment this button when getting the pet posts works.
+        <!-- <button class="btn btn-subtle-outline" type="button" data-bs-toggle="collapse"
           data-bs-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Posts <i
-            class="mdi mdi-menu-down-outline"></i></button>
+            class="mdi mdi-menu-down-outline"></i></button> -->
       </p>
     </div>
     <div class="row">

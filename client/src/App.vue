@@ -54,14 +54,18 @@ async function drawProfile() {
           </router-link>
         </div>
         <div class="col-2 text-center selectable navbar-button" role="button">
-          <i class=" mdi icon-select mdi-magnify"></i>
+          <router-link :to="{ name: 'Search' }">
+            <i class=" mdi icon-select text-warning mdi-magnify"></i>
+          </router-link>
         </div>
         <div class="col-2 text-center selectable navbar-button" role="button" data-bs-toggle="modal"
           data-bs-target="#newPostForm">
           <i class=" mdi icon-select mdi-plus-circle-outline"></i>
         </div>
         <div class="col-2 text-center selectable navbar-button" role="button">
-          <i class=" mdi icon-select mdi-heart-outline"></i>
+          <router-link :to="{ name: 'LikedPosts' }">
+            <i class=" mdi icon-select text-warning mdi-heart-outline"></i>
+          </router-link>
         </div>
         <div v-if="account" class="col-2 text-center d-flex justify-content-center align-items-center">
           <router-link :to="{ name: 'Profile', params: { profileId: account?.id } }">

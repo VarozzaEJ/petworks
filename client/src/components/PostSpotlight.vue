@@ -11,6 +11,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { petTagsService } from "../services/PetTagsService";
 
 // defineProps({ postProp: { type: Post, required: true } })
+const account = computed(() => AppState.account)
 const post = computed(() => AppState.activePost)
 const comments = computed(() => AppState.activePostComments)
 const foundPost = computed(() => AppState.posts.find(postData => postData.id == post.value.id)) //NOTE more than likely the wrong thing to find the specific post
@@ -90,6 +91,12 @@ async function likePost() {
         logger.log(error)
     }
 }
+
+async function unlikePost() {
+    const foundLike = foundPost.value.likes.find(like => like.accountId == account.value.id)
+    logger.log(foundLike)
+    // await postsService.unlikePost(postId)
+}
 </script>
 
 
@@ -127,7 +134,7 @@ async function likePost() {
                                     <div class="row">
                                         <div class="col text-center">
                                             <p v-for="taggedPet in taggedPets" :key="taggedPet.id"
-                                                class="pet-tag bg-danger fw-semibold mb-0">
+                                                class="pet-tag rounded-pill bg-danger fw-semibold mb-0">
                                                 {{
                                                     taggedPet.pet.name }}</p>
                                         </div>
@@ -136,8 +143,12 @@ async function likePost() {
                             </div>
                             <div class="card-body bg-primary d-flex align-items-center justify-content-between">
                                 <p class="mb-0 fs-5">{{ comments.length }} <i class="mdi mdi-comment-outline"></i></p>
-                                <p class="mb-0 fs-5"><i @click="likePost()" class="mdi mdi-heart-outline"></i>{{
-                                    foundPost.likeCount }}
+                                <p v-if="!foundPost.likes.find(like => like.accountId == account?.id)"
+                                    class=" mb-0 fs-5"><i @click="likePost()" class="mdi mdi-heart-outline"></i>{{
+                                        foundPost?.likes.length }}
+                                </p>
+                                <p v-else class="mb-0 fs-5"><i @click="unlikePost()" class="mdi mdi-heart"></i>{{
+                                    foundPost?.likes.length }}
                                 </p>
                             </div>
                             <form @submit.prevent="createComment()">

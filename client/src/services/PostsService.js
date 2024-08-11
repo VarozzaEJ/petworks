@@ -7,14 +7,27 @@ import { api } from "./AxiosService.js"
 
 
 class PostsService {
-  async unlikePost(likeId) {
-    const likeToDelete = await api.delete(`api/comments/${likeId}`)
-    return likeToDelete
+  async searchPosts(searchTerm) {
+    AppState.posts = null
+    const response = await api.get(`api/posts?query=${searchTerm}`)
+    logger.log(response)
+    const searchedPosts = response.data.posts.map(postPOJO => new Post(postPOJO))
+    AppState.searchingFor = searchTerm
+    AppState.posts = searchedPosts
+  }
+  async unlikePost(likeId, postId) {
+    const response = await api.delete(`api/likes/${likeId}`)
+    logger.log(response.data)
+    //TODO splice the like in the posts array to automatically update the dom.
+    // const deletedLike = response.data
+    const foundPost = AppState.posts.find(post => post.id == postId)
+    const foundLike = foundPost.likes.findIndex(like => like.id == likeId)
+    foundPost.likes.splice(foundLike, 1)
   }
   async getFileUrl(file) {
     const payload = new FormData()
     payload.append('image', file)
-    const response = await api.post('api/upload', payload)
+    const response = await api.post('api/upload/sharp', payload)
     return response.data
   }
   async likePost(postId) {

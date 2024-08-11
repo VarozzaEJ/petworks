@@ -42,6 +42,8 @@ export const AppState = reactive({
   /** @type {import('./models/Like.js').PostLikerProfile[]} user info from the database*/
   postLikeProfiles: [],
 
+  searchingFor: null,
+
   /** @type {import('./models/PetTag.js').PetPost[]} an array of posts connected to a pet*/
   petPosts: []
 })

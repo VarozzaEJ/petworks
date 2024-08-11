@@ -11,7 +11,8 @@ defineProps({ petOfTheDayProp: Pet })
     <div class="row g-0">
       <div class="col-3">
         <RouterLink :to="{ name: 'Pets', params: { petId: petOfTheDayProp.id } }">
-          <img :src="petOfTheDayProp.imgUrl" class="img-fluid rounded-start hero-img" :alt="petOfTheDayProp.name">
+          <img :src="petOfTheDayProp.imgUrl || petOfTheDayProp.file" class="img-fluid rounded-start hero-img"
+            :alt="petOfTheDayProp.name">
         </RouterLink>
       </div>
       <div class="col">
