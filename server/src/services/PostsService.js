@@ -3,6 +3,9 @@ import { Forbidden } from "../utils/Errors.js"
 
 
 class PostsService {
+  async getLikedPosts(userId) {
+    const likedPosts = await dbContext.Posts.find({})
+  }
   async createPost(postData) {
     const post = await dbContext.Posts.create(postData)
     await post.populate('creator comments')

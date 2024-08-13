@@ -15,6 +15,7 @@ export class PostsController extends BaseController {
       //FIXME figure out query for searching post content on the backend.
       .get('/:postId/comments', this.getCommentsByPostId)
       .get('/:postId/petTags', this.getPetTagsByPostId)
+      .get('/liked', this.getLikedPosts)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createPost)
       .delete('/:postId', this.deletePost)
@@ -78,6 +79,15 @@ export class PostsController extends BaseController {
     try {
       const searchTerm = request.query.searchTerm
       logger.log(request)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async getLikedPosts(request, response, next) {
+    try {
+      const likedPosts = await postsService.getLikedPosts()
+      response.send(likedPosts)
     } catch (error) {
       next(error)
     }

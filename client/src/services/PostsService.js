@@ -7,6 +7,10 @@ import { api } from "./AxiosService.js"
 
 
 class PostsService {
+  async getLikedPosts() {
+    const response = await api.get('api/posts/liked')
+    logger.log(response.data)
+  }
   async searchPosts(searchTerm) {
     AppState.posts = null
     const response = await api.get(`api/posts?query=${searchTerm}`)
