@@ -15,8 +15,8 @@ class CommentsService {
         AppState.activePostComments.unshift(comment)
         const foundPost = AppState.posts.find(post => post.id == postId)
         const foundProfilePost = AppState.activeProfilePosts.find(post => post.id == postId)
-        foundProfilePost.commentCount += 1
-        foundPost.commentCount++
+        if (foundProfilePost) foundProfilePost.commentCount += 1
+        if (foundPost) foundPost.commentCount++
     }
     async getCommentsByPostId(postId) {
         AppState.activePostComments = []

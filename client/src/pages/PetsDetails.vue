@@ -9,6 +9,7 @@ import { petTagsService } from "../services/PetTagsService.js";
 
 const petPosts = computed(() => AppState.petPosts)
 const activePet = computed(() => AppState.activePets)
+const account = computed(() => AppState.account)
 
 const route = useRoute()
 onMounted(() => {
@@ -38,6 +39,15 @@ async function getPetPosts() {
     Pop.error(error);
   }
 }
+
+async function deletePet() {
+  try {
+    await petsService.deletePet(route.params.petId)
+  }
+  catch (error) {
+    Pop.error(error);
+  }
+}
 </script>
 
 
@@ -48,18 +58,21 @@ async function getPetPosts() {
       <img class="img-fluid pet-img" :src="activePet.imgUrl || activePet.file" alt="">
     </div>
     <div class="container pt-4 bg-primary d-flex flex-column align-items-center ">
+
       <p class="text-capitalize fs-1 fw-bold">{{ activePet.name }} - <span class="fs-3"><i class="mdi mdi-calendar"></i>
           {{
-            activePet.birthday.toLocaleDateString() }}</span> </p>
+            activePet.birthday.toLocaleDateString() }}</span> <i v-if="activePet.ownerId == account?.id"
+          class="mdi mdi-delete text-danger" role="button" title="delete pet" @click="deletePet()"></i>
+      </p>
       <p class="fs-2 text-capitalize fw-bold">Species: {{ activePet.species }}</p>
 
 
       <div v-for="activePet in activePet.petStats" :key="activePet.attribute"
         class="d-flex w-100  mb-4 row justify-content-between bg-light">
-        <div class="col-4 d-flex me-4">
+        <div class="col-3 d-flex me-2">
           <p class="bg-subtle d-flex mb-0 me-3 p-1">{{ activePet.attribute }}: </p>
         </div>
-        <div class="col-7 pe-3 justify-content-between d-flex">
+        <div class="col-8 pe-3 justify-content-between d-flex">
 
           <div v-if="activePet.value == 1" class="bg-light  d-flex">
             <div class="move-down handle bg-primary ms-1 d-flex justify-content-center align-items-center"></div>
@@ -108,13 +121,12 @@ async function getPetPosts() {
       </div>
     </div>
 
-    <div class="d-flex justify-content-center pt-3">
+    <!-- <div class="d-flex justify-content-center pt-3"> -->
 
-      <p class="d-inline-flex gap-1">
-        //TODO uncomment this button when getting the pet posts works.
-        <!-- <button class="btn btn-subtle-outline" type="button" data-bs-toggle="collapse"
+    <!-- <p class="d-inline-flex gap-1">
+        <button class="btn btn-subtle-outline" type="button" data-bs-toggle="collapse"
           data-bs-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Posts <i
-            class="mdi mdi-menu-down-outline"></i></button> -->
+            class="mdi mdi-menu-down-outline"></i></button>
       </p>
     </div>
     <div class="row">
@@ -127,7 +139,7 @@ async function getPetPosts() {
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </section>
 </template>
 

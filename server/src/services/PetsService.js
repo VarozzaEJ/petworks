@@ -8,6 +8,13 @@ const petOfTheDayCache = {
 }
 
 class PetsService {
+  async deletePet(userId, petId) {
+    const pet = await dbContext.Pets.findById(petId).populate('owner')
+    console.log(pet.ownerId.toString())
+    if (pet.ownerId.toString() !== userId) throw new Forbidden("You cannot delete a pet you didn't create.")
+    await dbContext.Pets.findByIdAndDelete(petId)
+    return `${pet.name} was deleted successfully!`
+  }
   async getPetById(petId) {
     const foundPet = await dbContext.Pets.findById(petId).populate('owner')
     if (foundPet == null) throw new NotFound(`There is not a pet with the id of ${petId}`)

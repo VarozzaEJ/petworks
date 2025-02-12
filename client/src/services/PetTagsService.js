@@ -19,7 +19,8 @@ class PetTagsService {
     AppState.petPosts = []
     const response = await api.get(`api/pets/${petId}/petPosts`,)
     const petPosts = response.data.map(petPost => new PetPost(petPost))
-    AppState.petPosts = petPosts
+    logger.log(petPosts)
+    // AppState.petPosts = petPosts
   }
 }
 

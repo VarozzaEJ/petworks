@@ -13,6 +13,17 @@ export class PetsController extends BaseController {
       .get('/:petId/petPosts', this.getPetPosts)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.createPet)
+      .delete('/:petId', this.deletePet)
+  }
+  async deletePet(request, response, next) {
+    try {
+      const userId = request.userInfo.id
+      const petId = request.params.petId
+      const message = await petsService.deletePet(userId, petId)
+      response.send(message)
+    } catch (error) {
+      next(error)
+    }
   }
 
   async createPet(request, response, next) {

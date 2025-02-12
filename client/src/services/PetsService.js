@@ -1,10 +1,16 @@
 import { AppState } from "../AppState.js"
 import { Pet } from "../models/Pet.js"
 import { logger } from "../utils/Logger.js"
+import Pop from "../utils/Pop.js"
 import { api } from "./AxiosService.js"
 
 
 class PetsService {
+  async deletePet(petId) {
+    const response = await api.delete(`api/pets/${petId}`)
+    Pop.success(response.data)
+    history.back()
+  }
   async getFileUrl(file) {
     const payload = new FormData()
     payload.append('image', file)
@@ -21,7 +27,6 @@ class PetsService {
   }
   async getActivePetsDetails(petId) {
     AppState.activePets = null
-    //                           path: '/petsDetails/:petsId',
     const response = await api.get(`api/pets/${petId}`)
     const newPet = new Pet(response.data)
     AppState.activePets = newPet
