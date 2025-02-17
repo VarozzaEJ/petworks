@@ -98,6 +98,10 @@ async function unlikePost() {
     logger.log(foundLike)
     // await postsService.unlikePost(postId)
 }
+
+function removePostIdFromURL() {
+    window.history.back()
+}
 </script>
 
 
@@ -125,8 +129,8 @@ async function unlikePost() {
                                         </div>
                                         <div class="me-2 d-flex align-items-center">
 
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
+                                            <button @click="removePostIdFromURL()" type="button" class="btn-close"
+                                                data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
 
                                     </div>
@@ -135,18 +139,18 @@ async function unlikePost() {
                                     </div>
                                 </div>
                             </div>
-                            <div data-bs-toggle="modal" data-bs-target="#postFocusModal">
+                            <div @click="removePostIdFromURL()" data-bs-toggle="modal" data-bs-target="#postFocusModal">
                                 <img :src="post.imgUrl || post.file" class="card-img-top"
                                     :alt="`An image of an event with the type of`">
                             </div>
                             <div class="card-body">
                                 <div class="col-4">
                                     <div class="row">
-                                        <div class="col text-center">
+                                        <div v-if="taggedPets.length > 0" class="col text-center">
                                             <p v-for="taggedPet in taggedPets" :key="taggedPet.id"
                                                 class="pet-tag rounded-pill bg-danger fw-semibold mb-0">
                                                 {{
-                                                    taggedPet.pet.name }}</p>
+                                                    taggedPet.pet?.name }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -185,7 +189,7 @@ async function unlikePost() {
                                             <i class="mdi mdi-delete-forever"></i>
                                         </button>
                                     </span>
-                                    <p class="fs-5 ms-3 fw-bold text-dark">{{ comment.body }}</p>
+                                    <p class="fs-5 mx-3 fw-bold text-dark">{{ comment.body }}</p>
                                 </div>
                             </div>
                         </div>

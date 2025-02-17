@@ -41,13 +41,13 @@ async function unlikePost() {
   await postsService.unlikePost(likeId, props.postProp.id)
 }
 
-async function deletePost(postsId) {
+async function deletePost(postId) {
   try {
     const choice = await Pop.confirm("are you sure?", 'delete post')
     if (choice == false) {
       return
     }
-    await postsService.deletePost(postsId)
+    await postsService.deletePost(postId)
     Pop.success("Post Deleted!")
   }
   catch (error) {
